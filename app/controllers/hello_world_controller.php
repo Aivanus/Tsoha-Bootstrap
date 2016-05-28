@@ -11,4 +11,13 @@
       // Testaa koodiasi täällä
       View::make('helloworld.html');
     }
+
+    public static function login(){
+      View::make('suunnitelmat/login.html')
+    }
+
+    public static function register(){
+      View::make('suunnitelmat/register.html')
+    }
+
   }
