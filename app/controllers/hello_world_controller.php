@@ -20,7 +20,11 @@
       View::make('suunnitelmat/register.html');
     }
 
-    public static function book_list(){
-      View::make('suunnitelmat/book_list.html');
+    public static function reading_list(){
+      View::make('suunnitelmat/reading_list.html');
+    }
+
+    public static function add_book(){
+      View::make('suunnitelmat/add_book.html');
     }
   }
