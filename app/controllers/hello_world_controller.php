@@ -4,7 +4,7 @@
 
     public static function index(){
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
-   	  echo 'Tämä on etusivu!';
+   	  View::make('suunnitelmat/homepage.html');
     }
 
     public static function sandbox(){
@@ -27,4 +27,6 @@
     public static function add_book(){
       View::make('suunnitelmat/add_book.html');
     }
+    
+    
   }
