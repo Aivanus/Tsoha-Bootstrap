@@ -8,10 +8,14 @@
     HelloWorldController::sandbox();
   });
 
-  $routes->get('/login', function(){
+  $routes->get('/login', function() {
   	HelloWorldController::login();
-  })
+  });
 
-  $routes->get('/register', function(){
+  $routes->get('/register', function() {
   	HelloWorldController::register();
-  })
+  });
+
+  $routes->get('/book_list', function() {
+    HelloWorldController::book_list();
+  });

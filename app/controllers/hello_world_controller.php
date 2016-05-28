@@ -13,11 +13,14 @@
     }
 
     public static function login(){
-      View::make('suunnitelmat/login.html')
+      View::make('suunnitelmat/login.html');
     }
 
     public static function register(){
-      View::make('suunnitelmat/register.html')
+      View::make('suunnitelmat/register.html');
     }
 
+    public static function book_list(){
+      View::make('suunnitelmat/book_list.html');
+    }
   }
