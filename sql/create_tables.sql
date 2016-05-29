@@ -1,17 +1,17 @@
 CREATE TABLE Reader(
-	id SERIAL PPRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	username varchar(50) NOT NULL UNIQUE,
 	password varchar(50) NOT NULL
 );
 
 CREATE TABLE Book(
-	id SERIAL PPRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	title varchar(255) NOT NULL,
 	author varchar(255) NOT NULL
 );
 
 CREATE TABLE Review(
-	id SERIAL PPRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	reader_id INTEGER REFERENCES Reader(id),
 	book_id INTEGER REFERENCES Book(id),
 	score INTEGER NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE Review(
 );
 
 CREATE TABLE ReadingList(
-	id SERIAL PPRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	reader_id INTEGER REFERENCES Reader(id),
 	book_id INTEGER REFERENCES Book(id)
 );
