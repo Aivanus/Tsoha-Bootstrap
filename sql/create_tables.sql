@@ -15,7 +15,7 @@ CREATE TABLE Review(
 	reader_id INTEGER REFERENCES Reader(id),
 	book_id INTEGER REFERENCES Book(id),
 	score INTEGER NOT NULL,
-	review_text varchar(max)
+	review_text text
 );
 
 CREATE TABLE ReadingList(
