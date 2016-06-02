@@ -18,8 +18,10 @@ CREATE TABLE Review(
 	review_text text
 );
 
-CREATE TABLE ReadingList(
+CREATE TABLE MyBook(
 	id SERIAL PRIMARY KEY,
 	reader_id INTEGER REFERENCES Reader(id),
-	book_id INTEGER REFERENCES Book(id)
+	book_id INTEGER REFERENCES Book(id),
+	status INTEGER NOT NULL,
+	added DATE NOT NULL
 );
