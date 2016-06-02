@@ -18,8 +18,8 @@ class MyBook extends BaseModel{
 			$mybooks[] = new MyBook(array(
 				'id' => $row['id'],
 				'reader_id' => $row['reader_id'],
-				'book_id' => $row['book_id']
-				'status' => $row['status']
+				'book_id' => $row['book_id'],
+				'status' => $row['status'],
 				'added' => $row['added']
 			));		
 		}
@@ -38,8 +38,8 @@ class MyBook extends BaseModel{
 			$mybook = new MyBook(array(
 				'id' => $row['id'],
 				'reader_id' => $row['reader_id'],
-				'book_id' => $row['book_id']
-				'status' => $row['status']
+				'book_id' => $row['book_id'],
+				'status' => $row['status'],
 				'added' => $row['added']
 				));
 

@@ -12,6 +12,11 @@
       $books = Book::all();
       Kint::dump($books);
       Kint::dump($bird);
+      $oneMyBook = MyBook::find(1);
+      $allMyBook = MyBook::all();
+      Kint::dump($oneMyBook);
+      Kint::dump($allMyBook);
+
     }
     
     public static function login(){
