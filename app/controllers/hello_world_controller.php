@@ -8,7 +8,7 @@
     }
    
     public static function sandbox(){
-      $bird = Book::find(1);
+      $bird = Book::find('neuromancer', 'WillIam gibsOn');
       $books = Book::all();
       Kint::dump($books);
       Kint::dump($bird);

@@ -25,11 +25,13 @@ class Book extends BaseModel{
 		return $books;
 	}
 
-	public static function find($id){
+	public static function find($title, $author){
 		$query = DB::connection()->prepare(
-			'SELECT * FROM Book WHERE id = :id LIMIT 1'
+			'SELECT * FROM Book 
+				WHERE UPPER(title) = UPPER(:title) AND 
+				UPPER(author) = UPPER(:author) LIMIT 1'
 			);
-		$query->execute(array('id' => $id));
+		$query->execute(array('title' => $title, 'author' => $author));
 		$row = $query->fetch();
 
 		if($row){
