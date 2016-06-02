@@ -20,6 +20,10 @@
       $allReaders = Reader::all();
       Kint::dump($oneReader);
       Kint::dump($allReaders);
+      $oneReview = Review::find(1);
+      $allReviews = Review::all();
+      Kint::dump($oneReview);
+      Kint::dump($allReviews);
 
     }
     
