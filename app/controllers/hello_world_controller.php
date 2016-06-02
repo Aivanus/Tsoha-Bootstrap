@@ -13,9 +13,13 @@
       Kint::dump($books);
       Kint::dump($bird);
       $oneMyBook = MyBook::find(1);
-      $allMyBook = MyBook::all();
+      $allMyBooks = MyBook::all();
       Kint::dump($oneMyBook);
-      Kint::dump($allMyBook);
+      Kint::dump($allMyBooks);
+      $oneReader = Reader::find(1);
+      $allReaders = Reader::all();
+      Kint::dump($oneReader);
+      Kint::dump($allReaders);
 
     }
     
