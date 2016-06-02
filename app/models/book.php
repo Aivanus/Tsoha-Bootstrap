@@ -46,4 +46,12 @@ class Book extends BaseModel{
 
 		return null;
 	}
+
+	public function save(){
+		$query = DB::connection()->prepare('INSERT INTO Book (title, author) 
+			VALUES (:title, :author) RETURNING id');
+		$query->execute(array('title' => $this->title, 'author' => $this->author));
+		$row = $query->fetch();
+		$this->id = $row['id'];
+	}
 }

@@ -15,6 +15,7 @@ class BookController extends BaseController{
 		$title = $params['title'];
 		$author = $params['author'];
 		$search_result = Book::find($title, $author);
+		
 		if (!is_null($search_result)) {
 			
 			$mybook = new MyBook(array(
@@ -26,7 +27,25 @@ class BookController extends BaseController{
 
 			$mybook->save();
 
-			Redirect::to('/mybook', array('message' => 'A book was added on your reading list!'));
+		}else{
+			$new_book = new Book(array(
+				'title' => $title,
+				'author' => $author
+				));
+
+			$new_book->save();
+
+			$mybook = new MyBook(array(
+				'reader_id' => 1,
+				'book_id' => $new_book->id,
+				'status' => 0,
+				'added' => date("Y-m-d")
+			));
+
+			$mybook->save();
+
 		}
+
+		Redirect::to('/mybook', array('message' => 'A book was added on your reading list!'));
 	}
 }
