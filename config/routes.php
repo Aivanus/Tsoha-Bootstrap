@@ -16,8 +16,12 @@
   	HelloWorldController::register();
   });
 
-  $routes->get('/reading_list', function() {
+  $routes->get('/mybook', function() {
     BookController::readingList();
+  });
+
+  $routes->post('/mybook', function(){
+    BookController::store();
   });
 
   $routes->get('/mybook/add_book', function() {

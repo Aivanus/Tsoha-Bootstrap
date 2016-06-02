@@ -68,4 +68,12 @@ class MyBook extends BaseModel{
 		$row = $query->fetch();
 		return $row[0];
 	}
+
+	public function save(){
+		$query = DB::connection()->prepare('INSERT INTO MyBook (reader_id, book_id, status, added) 
+			VALUES (:reader_id, :book_id, :status, :added) RETURNING id');
+		$query->execute(array('reader_id' => $this->reader_id, 'book_id' => $this->book_id, 'status' => $this->status, 'added' => $this->added));
+		$row = $query->fetch();
+		$this->id = $row['id'];
+	}
 }
