@@ -2,10 +2,12 @@
 
 class MyBook extends BaseModel{
 
-	public $id, $reader_id, $book_id, $status, $added;
+	public $id, $reader_id, $book_id, $status, $added, $title, $author;
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+		$this->title = $this->getTitle();
+		$this->author = $this->getAuthor();
 	}
 
 	public static function all(){
@@ -48,4 +50,22 @@ class MyBook extends BaseModel{
 
 		return null;
 	} 
+
+	private function getTitle(){
+		$query = DB::connection()->prepare(
+			'SELECT title FROM Book WHERE id = :id LIMIT 1'
+			);
+		$query->execute(array('id' => $this->book_id));
+		$row = $query->fetch();
+		return $row[0];
+	}
+
+	private function getAuthor(){
+		$query = DB::connection()->prepare(
+			'SELECT author FROM Book WHERE id = :id LIMIT 1'
+			);
+		$query->execute(array('id' => $this->book_id));
+		$row = $query->fetch();
+		return $row[0];
+	}
 }
