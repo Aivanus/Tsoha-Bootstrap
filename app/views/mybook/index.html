@@ -5,25 +5,30 @@
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Title</th>
         <th>Author</th>
         <th>Status</th>
         <th>Added</th>
-        <th></th>
         <th></th>
       </tr>
     </thead>
 
     <tbody>
-      <!-- Listataan pelit tähän -->
+      {% for book in books %}
       <tr>
-        <td><a href="#"></a>The Great Gatsby</td>
-        <td>F. Scott Fitzgerald</td>
-        <td><label class="label label-danger">Unread</label></td>
-        <td>9.12.2014</td>
-        <th><a class="btn btn-default btn-sm" href="#">Edit</a></th>
+        <td><a href="{{base_path}}/book/{{book.id}}">{{book.title}}</td>
+        <td>{{book.author}}</td>
+        <td>
+          {% if book.status == 1 %}
+            <label class="label label-success">Read</label>
+          {% else %}
+            <label class="label label-danger">Unread</label>
+          {% endif %}
+        </td>
+        <td>{{game.added}}</td>
         <th><a class="btn btn-default btn-sm" href="#">Rate</a></th>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 
