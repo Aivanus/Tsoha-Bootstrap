@@ -2,15 +2,17 @@
 {% block content %}
   <h1>Add a new book</h1>
 
-  <form>
+  <form method="post" action="{{base_path}}/mybook">
     <div class="form-group">
       <label>Title</label>
-      <input type="text" class="form-control" value="Catch 22">
+      <input type="text" name="title" class="form-control">
     </div>
+
     <div class="form-group">
       <label>Author</label>
-      <input type="text" class="form-control" value="Joseph Heller">
+      <input type="text" name="author" class="form-control">
     </div>
+    
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Add</button>
     </div>
