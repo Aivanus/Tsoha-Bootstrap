@@ -17,9 +17,9 @@
   });
 
   $routes->get('/reading_list', function() {
-    BookController::index();
+    BookController::readingList();
   });
 
-  $routes->get('/add_book', function() {
-    HelloWorldController::add_book();
+  $routes->get('/mybook/add_book', function() {
+    BookController::add_book();
   });
