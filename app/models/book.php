@@ -9,7 +9,7 @@ class Book extends BaseModel{
 	}
 
 	public static function all(){
-		$query = DB::connection()->prepare('SELECT * FROM Book')
+		$query = DB::connection()->prepare('SELECT * FROM Book');
 		$query->execute();
 		$rows = $query->fetchAll();
 		$books = array();
@@ -22,7 +22,7 @@ class Book extends BaseModel{
 			));		
 		}
 
-		return $games;
+		return $books;
 	}
 
 	public static function find($id){

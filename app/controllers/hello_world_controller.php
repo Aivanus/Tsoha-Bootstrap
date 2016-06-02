@@ -1,17 +1,19 @@
 <?php
-
+  require 'app/models/book.php';
   class HelloWorldController extends BaseController{
 
     public static function index(){
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
    	  View::make('suunnitelmat/homepage.html');
     }
-
+   
     public static function sandbox(){
-      // Testaa koodiasi täällä
-      View::make('helloworld.html');
+      $bird = Book::find(1);
+      $books = Book::all();
+      Kint::dump($books);
+      Kint::dump($bird);
     }
-
+    
     public static function login(){
       View::make('suunnitelmat/login.html');
     }
