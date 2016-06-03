@@ -25,5 +25,9 @@
   });
 
   $routes->get('/mybook/add_book', function() {
-    BookController::add_book();
+    BookController::addBook();
   });
+
+  $routes->get('/book/:id', function($id) {
+    BookController::showBook($id);
+  });  

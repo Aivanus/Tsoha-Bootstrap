@@ -11,3 +11,4 @@ INSERT INTO MyBook (reader_id, book_id, status, added) VALUES (2, 2, 1, '2011-11
 INSERT INTO MyBook (reader_id, book_id, status, added) VALUES (2, 1, 0, '2011-11-11');
 -- Review-taulun testidata
 INSERT INTO Review (reader_id, book_id, score, review_text) VALUES (1, 1, 5, 'Awesome book!');
+INSERT INTO Review (reader_id, book_id, score, review_text) VALUES (1, 1, 4, 'Awesome book!');

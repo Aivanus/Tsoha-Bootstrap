@@ -8,10 +8,12 @@
     }
    
     public static function sandbox(){
-      $bird = Book::find('neuromancer', 'WillIam gibsOn');
+      $bird = Book::find('to kill a mockingbird', 'Harper LEe');
       $books = Book::all();
+      $bookRating = $bird->getRating();
       Kint::dump($books);
       Kint::dump($bird);
+      Kint::dump($bookRating);
       $oneMyBook = MyBook::find(1);
       $allMyBooks = MyBook::all();
       Kint::dump($oneMyBook);

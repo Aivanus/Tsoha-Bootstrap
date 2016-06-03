@@ -47,6 +47,34 @@ class Book extends BaseModel{
 		return null;
 	}
 
+	public static function findId($id){
+		$query = DB::connection()->prepare('
+			SELECT * FROM Book WHERE id = :id LIMIT 1
+			');
+		$query->execute(array('id' => $id));
+		$row = $query->fetch();
+		if($row){
+			$book = new Book(array(
+				'id' => $row['id'],
+				'title' => $row['title'],
+				'author' => $row['author']
+				));
+			return $book;
+		}
+		return null;
+	}
+
+	public function getRating(){
+		$query = DB::connection()->prepare('
+			SELECT ROUND(AVG(score), 1) FROM Book 
+				LEFT JOIN Review ON Book.id = Review.book_id 
+				WHERE Book.id = :id;
+		');
+		$query->execute(array('id' => $this->id));
+		$row = $query->fetch();
+		return $row[0];
+	}
+
 	public function save(){
 		$query = DB::connection()->prepare('INSERT INTO Book (title, author) 
 			VALUES (:title, :author) RETURNING id');

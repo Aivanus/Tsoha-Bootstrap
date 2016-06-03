@@ -6,7 +6,7 @@ class BookController extends BaseController{
 		View::make('mybook/reading_list.html', array('books' => $mybooks)); 
 	}
 
-	public static function add_book(){
+	public static function addBook(){
 		View::make('mybook/add_book.html');
 	}
 
@@ -47,5 +47,11 @@ class BookController extends BaseController{
 		}
 
 		Redirect::to('/mybook', array('message' => 'A book was added on your reading list!'));
+	}
+
+	public static function showBook($id){
+		$book = Book::findId($id);
+		View::make('book/book_info.html', array('book' => $book));
+
 	}
 }
