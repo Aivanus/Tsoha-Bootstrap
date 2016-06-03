@@ -15,7 +15,8 @@ CREATE TABLE Review(
 	reader_id INTEGER REFERENCES Reader(id),
 	book_id INTEGER REFERENCES Book(id),
 	score INTEGER NOT NULL,
-	review_text text
+	review_text text,
+	reviewed DATE NOT NULL
 );
 
 CREATE TABLE MyBook(

@@ -19,7 +19,8 @@ class ReviewController extends BaseController{
 				'reader_id' => 1,
 				'book_id' => $params['book_id'],
 				'score' => $params['score'],
-				'review_text' => $params['review']
+				'review_text' => $params['review'],
+				'reviewed' => date("Y-m-d")
 			));
 
 		$review->save();

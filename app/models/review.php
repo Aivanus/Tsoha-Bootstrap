@@ -1,7 +1,7 @@
 <?php
 
 class Review extends BaseModel{
-	public $id, $reader_id, $book_id, $score, $review_text, $date;
+	public $id, $reader_id, $book_id, $score, $review_text, $reviewed;
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
@@ -19,7 +19,8 @@ class Review extends BaseModel{
 				'reader_id' => $row['reader_id'],
 				'book_id' => $row['book_id'],
 				'score' => $row['score'],
-				'review_text' => $row['review_text']
+				'review_text' => $row['review_text'],
+				'reviewed' => $row['reviewed']
 			));		
 		}
 
@@ -38,7 +39,8 @@ class Review extends BaseModel{
 				'reader_id' => $row['reader_id'],
 				'book_id' => $row['book_id'],
 				'score' => $row['score'],
-				'review_text' => $row['review_text']
+				'review_text' => $row['review_text'],
+				'reviewed' => $row['reviewed']
 			));		
 		}
 
@@ -58,7 +60,8 @@ class Review extends BaseModel{
 				'reader_id' => $row['reader_id'],
 				'book_id' => $row['book_id'],
 				'score' => $row['score'],
-				'review_text' => $row['review_text']
+				'review_text' => $row['review_text'],
+				'reviewed' => $row['reviewed']
 				));
 
 			return $review;
@@ -69,10 +72,10 @@ class Review extends BaseModel{
 
 	public function save(){
 		$query = DB::connection()->prepare('
-			INSERT INTO Review (reader_id, book_id, score, review_text) 
-				VALUES (:reader_id, :book_id, :score, :review_text) RETURNING id
+			INSERT INTO Review (reader_id, book_id, score, review_text, reviewed) 
+				VALUES (:reader_id, :book_id, :score, :review_text, :reviewed) RETURNING id
 		');
-		$query->execute(array('reader_id' => $this->reader_id, 'book_id' => $this->book_id, 'score' => $this->score, 'review_text' => $this->review_text));
+		$query->execute(array('reader_id' => $this->reader_id, 'book_id' => $this->book_id, 'score' => $this->score, 'review_text' => $this->review_text, 'reviewed' => $this->reviewed));
 		$row = $query->fetch();
 		$this->id = $row['id'];
 	} 
