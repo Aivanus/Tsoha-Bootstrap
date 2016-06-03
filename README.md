@@ -16,8 +16,8 @@ Linkit sovelluksen sivuihin:
 
 * [Kirjautumissivu](http://ivkropot.users.cs.helsinki.fi/tsoha/login)
 * [Rekisteröinti](http://ivkropot.users.cs.helsinki.fi/tsoha/register)
-* [Lukulista](http://ivkropot.users.cs.helsinki.fi/tsoha/reading_list)
-* [Kirjan lisääminen](http://ivkropot.users.cs.helsinki.fi/tsoha//add_book)
+* [Lukulista](http://ivkropot.users.cs.helsinki.fi/tsoha/mybook)
+* [Kirjan lisääminen](http://ivkropot.users.cs.helsinki.fi/tsoha/mybook/add_book)
 
 ## Työn aihe
 
