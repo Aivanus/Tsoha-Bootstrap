@@ -30,4 +30,8 @@
 
   $routes->get('/book/:id', function($id) {
     BookController::showBook($id);
-  });  
+  });
+
+  $routes->get('/review/new', function() {
+    ReviewController::newReview();
+  });    

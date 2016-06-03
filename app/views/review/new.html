@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Write a review</h1>
+
+<form method="post" action="#">
+    <div class="form-group">
+      <label>Score</label>
+      	{% for i in range(1, 5) %}
+	    <label class="radio-inline">
+	  		<input type="radio" name="inlineRadioOptions" id="inlineRadio{{i}}" value="option1"> {{i}}
+		</label>
+		{% endfor %}
+		{# <label class="radio-inline">
+	 		<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2
+		</label>
+			<label class="radio-inline">
+	  		<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3
+		</label> #}
+    </div>
+
+    <div class="form-group">
+      <label>Review</label>
+      <textarea class="form-control" rows="3"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+{% endblock %}
