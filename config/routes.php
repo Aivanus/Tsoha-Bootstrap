@@ -36,6 +36,10 @@
     ReviewController::store();
   });
 
+  $routes->get('/review/list/:id', function($id) {
+    ReviewController::reviewList($id);
+  });    
+
   $routes->get('/review/new/:id', function($id) {
     ReviewController::newReview($id);
   });    

@@ -1,7 +1,7 @@
 <?php
 
 class Review extends BaseModel{
-	public $id, $reader_id, $book_id, $score, $review_text;
+	public $id, $reader_id, $book_id, $score, $review_text, $date;
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
@@ -10,6 +10,25 @@ class Review extends BaseModel{
 	public static function all(){
 		$query = DB::connection()->prepare('SELECT * FROM Review');
 		$query->execute();
+		$rows = $query->fetchAll();
+		$reviews = array();
+
+		foreach ($rows as $row) {
+			$reviews[] = new Review(array(
+				'id' => $row['id'],
+				'reader_id' => $row['reader_id'],
+				'book_id' => $row['book_id'],
+				'score' => $row['score'],
+				'review_text' => $row['review_text']
+			));		
+		}
+
+		return $reviews;
+	}
+
+	public static function allForBook($id){
+		$query = DB::connection()->prepare('SELECT * FROM Review WHERE book_id = :id');
+		$query->execute(array('id' => $id));
 		$rows = $query->fetchAll();
 		$reviews = array();
 

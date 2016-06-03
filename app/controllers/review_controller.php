@@ -1,9 +1,15 @@
 <?php
 
 class ReviewController extends BaseController{
+	
 	public static function newReview($id){
 		$book = Book::findId($id);
 		View::make('review/new.html', array('book' => $book));
+	}
+
+	public static function reviewList($id){
+		$reviews = Review::allForBook($id);
+		View::make('review/list.html', array('reviews' => $reviews));
 	}
 
 	public static function store(){

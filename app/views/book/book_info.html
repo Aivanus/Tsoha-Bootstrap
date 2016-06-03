@@ -2,13 +2,6 @@
 {% block content %}
 <h1>Information</h1>
 
-{# <table class="table table-striped table-bordered">
-	<thead>
-		<tr>
-			<th></th>
-		</tr>
-	</thead>
-</table> #}
 <dl class="dl-horizontal">
 	<dt>
 		<th>Title</th>
@@ -29,4 +22,8 @@
 		<td>{{book.getRating()}}</td>	
 	</dd>
 </dl>
+
+<p>
+    <a href="{{base_path}}/review/list/{{book.id}}" class="btn btn-primary">Read reviews of this book</a>
+</p>
 {% endblock %}
