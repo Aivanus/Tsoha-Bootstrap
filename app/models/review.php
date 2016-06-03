@@ -46,5 +46,15 @@ class Review extends BaseModel{
 		}
 
 		return null;
+	}
+
+	public function save(){
+		$query = DB::connection()->prepare('
+			INSERT INTO Review (reader_id, book_id, score, review_text) 
+				VALUES (:reader_id, :book_id, :score, :review_text) RETURNING id
+		');
+		$query->execute(array('reader_id' => $this->reader_id, 'book_id' => $this->book_id, 'score' => $this->score, 'review_text' => $this->review_text));
+		$row = $query->fetch();
+		$this->id = $row['id'];
 	} 
 }

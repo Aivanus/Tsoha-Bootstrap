@@ -26,7 +26,7 @@
           {% endif %}
         </td>
         <td>{{book.added}}</td>
-        <th><a class="btn btn-default btn-sm" href="{{base_path}}/review/new">Rate</a></th>
+        <th><a class="btn btn-default btn-sm" href="{{base_path}}/review/new/{{book.book_id}}">Rate</a></th>
       </tr>
       {% endfor %}
     </tbody>
