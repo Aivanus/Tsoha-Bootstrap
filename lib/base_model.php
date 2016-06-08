@@ -21,8 +21,21 @@
 
       foreach($this->validators as $validator){
         // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
+        // $metodin_nimi = 'testi_metodi';
+        // $this->{$metodin_nimi}();
+        $validator_errors[] = $this->{$validator}();
       }
 
+      $errors = array_merge($errors, $validator_errors);
+
+      return $errors;
+    }
+
+    public function validate_field_not_null($string){
+      $errors = array();
+      if($this->$string == '' || $this->$string == null){
+        $errors[] = 'Field cannot be empty!';
+      }
       return $errors;
     }
 

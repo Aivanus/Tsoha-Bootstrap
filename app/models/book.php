@@ -6,6 +6,7 @@ class Book extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+		$this->validators = array('validate_title', 'validate_author');
 	}
 
 	public static function all(){
@@ -81,5 +82,13 @@ class Book extends BaseModel{
 		$query->execute(array('title' => $this->title, 'author' => $this->author));
 		$row = $query->fetch();
 		$this->id = $row['id'];
+	}
+
+	public function validate_title(){
+		return parent::validate_field_not_null($this->title);
+	}
+
+	public function validate_author(){
+		return parent::validate_field_not_null($this->author);
 	}
 }
