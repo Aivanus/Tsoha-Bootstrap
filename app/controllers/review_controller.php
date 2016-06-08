@@ -18,7 +18,8 @@ class ReviewController extends BaseController{
 	}
 
 	public static function myReviews(){
-		$reviews = Review::allForUser(1);
+		$user = self::get_user_logged_in();
+		$reviews = Review::allForUser($user->id);
 		View::make('review/my_reviews.html', array('reviews' => $reviews));
 	}
 
