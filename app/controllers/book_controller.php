@@ -33,20 +33,26 @@ class BookController extends BaseController{
 				'author' => $author
 				));
 
-			$new_book->save();
+			$errors = $new_book->errors();
 
-			$mybook = new MyBook(array(
-				'reader_id' => 1,
-				'book_id' => $new_book->id,
-				'status' => 0,
-				'added' => date("Y-m-d")
-			));
+			if(count($errors) > 0){
+				Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
+			}else{
 
-			$mybook->save();
+				$new_book->save();
 
+				$mybook = new MyBook(array(
+					'reader_id' => 1,
+					'book_id' => $new_book->id,
+					'status' => 0,
+					'added' => date("Y-m-d")
+				));
+
+				$mybook->save();
+				}
 		}
 
-		Redirect::to('/mybook', array('message' => 'A book was added on your reading list!'));
+		Redirect::to('/book/' . $mybook->book_id, array('message' => 'A book was added on your reading list!'));
 	}
 
 	public static function showBook($id){

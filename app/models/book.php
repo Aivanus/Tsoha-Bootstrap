@@ -85,10 +85,10 @@ class Book extends BaseModel{
 	}
 
 	public function validate_title(){
-		return parent::validate_field_not_null($this->title);
+		return parent::validate_field_not_null($this->title, 'Title cannot be empty!');
 	}
 
 	public function validate_author(){
-		return parent::validate_field_not_null($this->author);
+		return parent::validate_field_not_null($this->author, 'Author cannot be empty!');
 	}
 }

@@ -23,20 +23,22 @@
         // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
         // $metodin_nimi = 'testi_metodi';
         // $this->{$metodin_nimi}();
-        $validator_errors[] = $this->{$validator}();
+        //array_push($errors, $this->{$validator}());
+        $validator_errors = $this->{$validator}();
+        if ($validator_errors != null) {
+          $errors[] = $validator_errors;
+        }
+        
       }
 
-      $errors = array_merge($errors, $validator_errors);
-
       return $errors;
+      //$errors = array_merge($errors, $validator_errors);      
     }
 
-    public function validate_field_not_null($string){
-      $errors = array();
-      if($this->$string == '' || $this->$string == null){
-        $errors[] = 'Field cannot be empty!';
+    public function validate_field_not_null($string, $message){
+      if($string == '' || $string == null){
+        return $message;
       }
-      return $errors;
     }
 
   }

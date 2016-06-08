@@ -32,6 +32,8 @@
         'title' => '',
         'author' => ''
         ));
+      $error = $invalid_book->validate_title();
+      Kint::dump($error);
       $errors = $invalid_book->errors();
       Kint::dump($errors);
       
