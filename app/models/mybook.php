@@ -76,4 +76,11 @@ class MyBook extends BaseModel{
 		$row = $query->fetch();
 		$this->id = $row['id'];
 	}
+
+	public function destroy(){
+		$query = DB::connection()->prepare(
+			'DELETE FROM MyBook WHERE id = :id'
+			);
+		$query->execute(array('id' => $this->id));
+	}
 }

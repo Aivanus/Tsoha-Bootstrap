@@ -10,6 +10,7 @@
         <th>Status</th>
         <th>Added</th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
 
@@ -27,6 +28,11 @@
         </td>
         <td>{{book.added}}</td>
         <th><a class="btn btn-default btn-sm" href="{{base_path}}/review/new/{{book.book_id}}">Rate</a></th>
+        <th>
+            <form method="post" action="{{base_path}}/mybook/destroy/{{book.id}}" style="display: inline-block;">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </th>
       </tr>
       {% endfor %}
     </tbody>

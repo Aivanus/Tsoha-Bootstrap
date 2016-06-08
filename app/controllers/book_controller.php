@@ -60,4 +60,11 @@ class BookController extends BaseController{
 		View::make('book/book_info.html', array('book' => $book));
 
 	}
+
+	public static function remove_from_list($id){
+	    $mybook = new MyBook(array('id' => $id));
+	    $mybook->destroy();
+
+	    Redirect::to('/mybook', array('message' => 'Book has been removed from your list!'));
+  }
 }

@@ -24,6 +24,10 @@
     BookController::store();
   });
 
+  $routes->post('/mybook/destroy/:id', function($id){
+    BookController::remove_from_list($id);
+  });
+
   $routes->get('/mybook/add_book', function() {
     BookController::addBook();
   });
