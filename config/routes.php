@@ -8,13 +8,9 @@
     HelloWorldController::sandbox();
   });
 
-  $routes->get('/login', function() {
-  	HelloWorldController::login();
-  });
-
-  $routes->get('/register', function() {
-  	HelloWorldController::register();
-  });
+  //$routes->get('/register', function() {
+  	//HelloWorldController::register();
+  //});
 
   $routes->get('/mybook', function() {
     BookController::readingList();
@@ -58,4 +54,14 @@
 
   $routes->get('/review/new/:id', function($id) {
     ReviewController::newReview($id);
-  });    
+  }); 
+
+  $routes->get('/login', function(){
+    UserController::login();
+  });
+
+  $routes->post('/login', function(){
+    UserController::handle_login();
+  });  
+
+   
