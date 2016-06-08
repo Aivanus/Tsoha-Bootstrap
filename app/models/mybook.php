@@ -10,9 +10,9 @@ class MyBook extends BaseModel{
 		$this->author = $this->getAuthor();
 	}
 
-	public static function all(){
-		$query = DB::connection()->prepare('SELECT * FROM MyBook');
-		$query->execute();
+	public static function all($user){
+		$query = DB::connection()->prepare('SELECT * FROM MyBook WHERE reader_id = :reader_id');
+		$query->execute(array('reader_id' => $user->id));
 		$rows = $query->fetchAll();
 		$mybooks = array();
 

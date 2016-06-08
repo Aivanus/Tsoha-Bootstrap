@@ -2,7 +2,8 @@
 
 class BookController extends BaseController{
 	public static function readingList(){
-		$mybooks = MyBook::all();
+		$user = self::get_user_logged_in();
+		$mybooks = MyBook::all($user);
 		View::make('mybook/reading_list.html', array('books' => $mybooks)); 
 	}
 
