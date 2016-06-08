@@ -12,6 +12,8 @@ Käyttäjätunnus ja salasana testaamista varten:
 
 Linkit sovelluksen sivuihin:
 
+	!!HUOM!! Lukulista vaatii sisäänkirjautumisen!
+
 * [Kirjautumissivu](http://ivkropot.users.cs.helsinki.fi/tsoha/login)
 * [Rekisteröinti](http://ivkropot.users.cs.helsinki.fi/tsoha/register)
 * [Lukulista](http://ivkropot.users.cs.helsinki.fi/tsoha/mybook)
