@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>My Reviews</h1>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Score</th>
+        <th>Review</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for review in reviews %}
+      <tr>
+        <td>{{review.score}}</td>
+        <td><a href="#review_text">TODO</td>
+        <td>{{review.reviewed}}</td>
+        <th>
+            <form method="get" action="{{base_path}}/review/edit/{{review.id}}" style="display: inline-block;">
+              <button type="submit" class="btn btn-danger btn-sm">Edit</button>
+            </form>
+        </th>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

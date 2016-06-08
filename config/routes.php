@@ -36,8 +36,20 @@
     BookController::showBook($id);
   });
 
+  $routes->get('/myreviews', function() {
+    ReviewController::myReviews();
+  });
+
   $routes->post('/review', function(){
     ReviewController::store();
+  });
+
+  $routes->post('/review/edit/:id', function($id){
+    ReviewController::update($id);
+  });
+
+  $routes->get('/review/edit/:id', function($id){
+    ReviewController::editReview($id);
   });
 
   $routes->get('/review/list/:id', function($id) {

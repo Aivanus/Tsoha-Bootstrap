@@ -47,6 +47,26 @@ class Review extends BaseModel{
 		return $reviews;
 	}
 
+	public static function allForUser($id){
+		$query = DB::connection()->prepare('SELECT * FROM Review WHERE reader_id = :id');
+		$query->execute(array('id' => $id));
+		$rows = $query->fetchAll();
+		$reviews = array();
+
+		foreach ($rows as $row) {
+			$reviews[] = new Review(array(
+				'id' => $row['id'],
+				'reader_id' => $row['reader_id'],
+				'book_id' => $row['book_id'],
+				'score' => $row['score'],
+				'review_text' => $row['review_text'],
+				'reviewed' => $row['reviewed']
+			));		
+		}
+
+		return $reviews;
+	}
+
 	public static function find($id){
 		$query = DB::connection()->prepare(
 			'SELECT * FROM Review WHERE id = :id LIMIT 1'
@@ -78,5 +98,15 @@ class Review extends BaseModel{
 		$query->execute(array('reader_id' => $this->reader_id, 'book_id' => $this->book_id, 'score' => $this->score, 'review_text' => $this->review_text, 'reviewed' => $this->reviewed));
 		$row = $query->fetch();
 		$this->id = $row['id'];
-	} 
+	}
+
+	public function update(){
+		$query = DB::connection()->prepare('
+			UPDATE Review SET
+				score = :score, review_text = :review_text,
+				reviewed = :reviewed
+				WHERE id = :id
+		');
+		$query->execute(array('score' => $this->score, 'review_text' => $this->review_text, 'reviewed' => $this->reviewed, 'id' => $this->id));
+	}  
 }
