@@ -15,7 +15,7 @@
     <tbody>
       {% for review in reviews %}
       <tr>
-        <td><a href="#userpage">TODO</td>
+        <td><a href="#userpage">{{review.getUsername()}}</td>
         <td>{{review.score}}</td>
         <td><a href="#review_text">TODO</td>
         <td>{{review.reviewed}}</td>

@@ -90,6 +90,15 @@ class Review extends BaseModel{
 		return null;
 	}
         
+        public function getUsername(){
+            $query = DB::connection()->prepare(
+			'SELECT Username FROM Reader WHERE id = :id LIMIT 1'
+			);
+		$query->execute(array('id' => $this->reader_id));
+                $row = $query->fetch();
+                return $row[0];
+        }
+        
         public function getTitle(){
             $query = DB::connection()->prepare(
 			'SELECT Title FROM Book WHERE id = :id LIMIT 1'
