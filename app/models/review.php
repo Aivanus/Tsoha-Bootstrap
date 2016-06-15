@@ -89,8 +89,17 @@ class Review extends BaseModel{
 
 		return null;
 	}
+        
+        public function getTitle(){
+            $query = DB::connection()->prepare(
+			'SELECT Title FROM Book WHERE id = :id LIMIT 1'
+			);
+		$query->execute(array('id' => $this->book_id));
+                $row = $query->fetch();
+                return $row[0];
+        }
 
-	public function save(){
+        public function save(){
 		$query = DB::connection()->prepare('
 			INSERT INTO Review (reader_id, book_id, score, review_text, reviewed) 
 				VALUES (:reader_id, :book_id, :score, :review_text, :reviewed) RETURNING id
