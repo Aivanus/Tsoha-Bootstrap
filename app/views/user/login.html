@@ -2,30 +2,6 @@
 {% block content %}
   <h1>Login</h1>
 
-  {% if message %}
-    <div class="alert alert-info">
-      <ul>
-        <li>{{message}}</li>
-      </ul>
-    </div>
-  {% endif %}
-
-  {% if success %}
-    <div class="alert alert-success">
-      <ul>
-        <li>{{success}}</li>
-      </ul>
-    </div>
-  {% endif %}
-
-  {% if error %}
-    <div class="alert alert-danger">
-      <ul>
-          <li>{{error}}</li>
-      </ul>
-    </div>
-  {% endif %}
-
   <form method="post" action="{{base_path}}/login">
     <div class="form-group">
       <label>Username</label>

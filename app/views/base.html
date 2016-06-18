@@ -62,6 +62,30 @@
     </nav>
 
     <div id="main-container">
+
+    {% if message %}
+    <div class="alert alert-info">
+      <ul>
+        <li>{{message}}</li>
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if success %}
+    <div class="alert alert-success">
+      <ul>
+        <li>{{success}}</li>
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if error %}
+    <div class="alert alert-danger">
+      <ul>
+          <li>{{error}}</li>
+      </ul>
+    </div>
+  {% endif %}
       <!-- Dynaaminen sisältö tulee tähän -->
       {% block content %}{% endblock %}
     </div>
