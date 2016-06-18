@@ -69,4 +69,11 @@ class BookController extends BaseController{
 
 	    Redirect::to('/mybook', array('message' => 'Book was removed from your list!'));
   }
+
+  public static function changeStatus($id){
+  	$mybook = new MyBook(array('id' => $id));
+  	$mybook->changeStatus();
+
+  	Redirect::to('/mybook', array('success' => 'Status of the book upadated!'));
+  }
 }

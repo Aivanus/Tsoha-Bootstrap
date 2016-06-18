@@ -83,4 +83,22 @@ class MyBook extends BaseModel{
 			);
 		$query->execute(array('id' => $this->id));
 	}
+
+	public function update(){
+
+	}
+
+	public function changeStatus(){
+		if ($this->status == 0){
+			$this->status = 1;
+		}else{
+			$this->status = 1;
+		}
+		$query = DB::connection()->prepare('
+			UPDATE MyBook SET
+				status = :status
+				WHERE id = :id
+		');
+		$query->execute(array('status' => $this->status, 'id' => $this->id));
+	}
 }

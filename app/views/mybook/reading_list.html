@@ -21,18 +21,24 @@
             <td>{{book.author}}</td>
             <td>
                 {% if book.status == 1 %}
-                <label class="label label-success">Read</label>
+<!--                 <label class="label label-success">Read</label> -->
+                <form method="post" action='#' style="display: inline-block;">
+                    <button type="buttn" class="btn btn-success btn-sm" disabled="disabled">Read</button>
+                </form>
                 {% else %}
-                <label class="label label-danger">Unread</label>
+                <!-- <label class="label label-danger">Unread</label> -->
+                <form method="post" action="{{base_path}}/mybook/status/{{book.id}}" style="display: inline-block;">
+                    <button type="submit" class="btn btn-danger btn-sm">Unread</button>
+                </form>
                 {% endif %}
             </td>
             <td>{{book.added}}</td>
-            <th><a class="btn btn-default btn-sm" href="{{base_path}}/review/new/{{book.book_id}}">Rate</a></th>
-            <th>
+            <td><a class="btn btn-default btn-sm" href="{{base_path}}/review/new/{{book.book_id}}">Rate</a></td>
+            <td>
                 <form method="post" action="{{base_path}}/mybook/destroy/{{book.id}}" style="display: inline-block;">
                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                 </form>
-            </th>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

@@ -40,6 +40,10 @@
     BookController::remove_from_list($id);
   });
 
+  $routes->post('/mybook/status/:id', function($id){
+    BookController::changeStatus($id);
+  });
+
   $routes->get('/mybook/add_book', function() {
     BookController::addBook();
   });
