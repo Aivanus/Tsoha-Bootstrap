@@ -24,6 +24,14 @@
     UserController::logout();
   });
 
+  $routes->get('/register', function(){
+    UserController::register();
+  });
+
+  $routes->post('/register', function(){
+    UserController::createUser();
+  });
+
   //$routes->get('/register', function() {
   	//HelloWorldController::register();
   //});

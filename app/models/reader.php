@@ -7,23 +7,6 @@ class Reader extends BaseModel{
 		parent::__construct($attributes);
 	}
 
-	public static function all(){
-		$query = DB::connection()->prepare('SELECT * FROM Reader');
-		$query->execute();
-		$rows = $query->fetchAll();
-		$readers = array();
-
-		foreach ($rows as $row) {
-			$readers[] = new Reader(array(
-				'id' => $row['id'],
-				'username' => $row['username'],
-				'password' => $row['password']
-			));		
-		}
-
-		return $readers;
-	}
-
 	public static function find($id){
 		$query = DB::connection()->prepare(
 			'SELECT * FROM Reader WHERE id = :id LIMIT 1'
@@ -32,15 +15,41 @@ class Reader extends BaseModel{
 		$row = $query->fetch();
 
 		if($row){
-			$reader = new Reader(array(
+			$user = new User(array(
 				'id' => $row['id'],
 				'username' => $row['username'],
 				'password' => $row['password']
 				));
 
-			return $reader;
+			return $user;
 		}
 
 		return null;
+	}
+
+	public function save(){
+		$query = DB::connection()->prepare('
+			INSERT INTO Reader (username, password) 
+				VALUES (:username, :password) 
+				RETURNING id
+		');
+		$query->execute(array('username' => $this->username, 'password' => $this->password));
+		$row = $query->fetch();
+		$this->id = $row['id'];
+	}
+
+	public static function authenticate($username, $password){
+		$query = DB::connection()->prepare('SELECT * FROM Reader WHERE username = :username AND password = :password LIMIT 1');
+		$query->execute(array('username' => $username, 'password' => $password));
+		$row = $query->fetch();
+		if($row){
+	 		return new User(array(
+				'id' => $row['id'],
+				'username' => $row['username'],
+				'password' => $row['password']
+				));
+		}else{
+	  		return null;
+		}
 	}
 }
