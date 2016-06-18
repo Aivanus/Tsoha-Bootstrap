@@ -1,5 +1,9 @@
 <?php
 
+  function check_logged_in(){
+    BaseController::check_logged_in();
+  }
+
   $routes->get('/', function() {
     HelloWorldController::index();
   });
@@ -8,11 +12,23 @@
     HelloWorldController::sandbox();
   });
 
+  $routes->get('/login', function(){
+    UserController::login();
+  });
+
+  $routes->post('/login', function(){
+    UserController::handle_login();
+  });
+
+  $routes->post('/logout', function(){
+    UserController::logout();
+  });
+
   //$routes->get('/register', function() {
   	//HelloWorldController::register();
   //});
 
-  $routes->get('/mybook', function() {
+  $routes->get('/mybook', 'check_logged_in', function() {
     BookController::readingList();
   });
 
@@ -55,13 +71,5 @@
   $routes->get('/review/new/:id', function($id) {
     ReviewController::newReview($id);
   }); 
-
-  $routes->get('/login', function(){
-    UserController::login();
-  });
-
-  $routes->post('/login', function(){
-    UserController::handle_login();
-  });  
 
    
