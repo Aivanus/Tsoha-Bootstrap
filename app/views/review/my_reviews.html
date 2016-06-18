@@ -16,7 +16,7 @@
     <tbody>
       {% for review in reviews %}
       <tr>
-        <td>{{review.getTitle()}}</td>
+        <td><a href="{{base_path}}/book/{{review.book_id}}">{{review.getTitle()}}</td>
         <td>{{review.score}}</td>
         <td><a href="#review_text">{{review.review_text}}</td>
         <td>{{review.reviewed}}</td>
