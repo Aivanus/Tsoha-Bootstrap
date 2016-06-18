@@ -37,7 +37,7 @@ class ReviewController extends BaseController{
 
 		$review->save();
 
-		Redirect::to('/book/'.$review->book_id, array('message' => 'Your review was added!'));
+		Redirect::to('/myreviews', array('message' => 'Your review was added!'));
 	}
 
 	public static function update(){
