@@ -13,6 +13,7 @@ class BookController extends BaseController{
 
 	public static function store(){
 		$params = $_POST;
+		$user = self::get_user_logged_in();
 		$title = $params['title'];
 		$author = $params['author'];
 		$search_result = Book::find($title, $author);
@@ -20,7 +21,7 @@ class BookController extends BaseController{
 		if (!is_null($search_result)) {
 			
 			$mybook = new MyBook(array(
-				'reader_id' => 1,
+				'reader_id' => $user->id,
 				'book_id' => $search_result->id,
 				'status' => 0,
 				'added' => date("Y-m-d")
@@ -43,7 +44,7 @@ class BookController extends BaseController{
 				$new_book->save();
 
 				$mybook = new MyBook(array(
-					'reader_id' => 1,
+					'reader_id' => $user->id,
 					'book_id' => $new_book->id,
 					'status' => 0,
 					'added' => date("Y-m-d")
@@ -53,7 +54,7 @@ class BookController extends BaseController{
 				}
 		}
 
-		Redirect::to('/book/' . $mybook->book_id, array('message' => 'A book was added on your reading list!'));
+		Redirect::to('/book/' . $mybook->book_id, array('message' => $mybook->getTitle().' was added to your reading list!'));
 	}
 
 	public static function showBook($id){
@@ -66,6 +67,6 @@ class BookController extends BaseController{
 	    $mybook = new MyBook(array('id' => $id));
 	    $mybook->destroy();
 
-	    Redirect::to('/mybook', array('message' => 'Book has been removed from your list!'));
+	    Redirect::to('/mybook', array('message' => 'Book was removed from your list!'));
   }
 }

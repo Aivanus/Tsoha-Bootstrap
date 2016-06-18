@@ -51,7 +51,7 @@ class MyBook extends BaseModel{
 		return null;
 	} 
 
-	private function getTitle(){
+	public function getTitle(){
 		$query = DB::connection()->prepare(
 			'SELECT title FROM Book WHERE id = :id LIMIT 1'
 			);
@@ -60,7 +60,7 @@ class MyBook extends BaseModel{
 		return $row[0];
 	}
 
-	private function getAuthor(){
+	public function getAuthor(){
 		$query = DB::connection()->prepare(
 			'SELECT author FROM Book WHERE id = :id LIMIT 1'
 			);

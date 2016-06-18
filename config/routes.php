@@ -56,8 +56,8 @@
     ReviewController::store();
   });
 
-  $routes->post('/review/edit/:id', function($id){
-    ReviewController::update($id);
+  $routes->post('/review/edit/:id', function(){
+    ReviewController::update();
   });
 
   $routes->get('/review/edit/:id', function($id){

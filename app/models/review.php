@@ -90,25 +90,25 @@ class Review extends BaseModel{
 		return null;
 	}
         
-        public function getUsername(){
-            $query = DB::connection()->prepare(
-			'SELECT Username FROM Reader WHERE id = :id LIMIT 1'
-			);
+    public function getUsername(){
+        $query = DB::connection()->prepare(
+		'SELECT Username FROM Reader WHERE id = :id LIMIT 1'
+		);
 		$query->execute(array('id' => $this->reader_id));
-                $row = $query->fetch();
-                return $row[0];
-        }
-        
-        public function getTitle(){
-            $query = DB::connection()->prepare(
-			'SELECT Title FROM Book WHERE id = :id LIMIT 1'
-			);
+        $row = $query->fetch();
+        return $row[0];
+    }
+    
+    public function getTitle(){
+        $query = DB::connection()->prepare(
+		'SELECT Title FROM Book WHERE id = :id LIMIT 1'
+		);
 		$query->execute(array('id' => $this->book_id));
-                $row = $query->fetch();
-                return $row[0];
-        }
+        $row = $query->fetch();
+        return $row[0];
+    }
 
-        public function save(){
+    public function save(){
 		$query = DB::connection()->prepare('
 			INSERT INTO Review (reader_id, book_id, score, review_text, reviewed) 
 				VALUES (:reader_id, :book_id, :score, :review_text, :reviewed) RETURNING id
@@ -123,8 +123,8 @@ class Review extends BaseModel{
 			UPDATE Review SET
 				score = :score, review_text = :review_text,
 				reviewed = :reviewed
-				WHERE id = :id
+				WHERE reader_id = :reader_id AND book_id = :book_id
 		');
-		$query->execute(array('score' => $this->score, 'review_text' => $this->review_text, 'reviewed' => $this->reviewed, 'id' => $this->id));
+		$query->execute(array('score' => $this->score, 'review_text' => $this->review_text, 'reviewed' => $this->reviewed, 'reader_id' => $this->reader_id, 'book_id' => $this->book_id));
 	}  
 }

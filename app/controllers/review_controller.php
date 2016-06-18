@@ -25,9 +25,10 @@ class ReviewController extends BaseController{
 
 	public static function store(){
 		$params = $_POST;
-		Kint::dump($params);
+		$user = self::get_user_logged_in();
+		//Kint::dump($params);
 		$review = new Review(array(
-				'reader_id' => 1,
+				'reader_id' => $user->id,
 				'book_id' => $params['book_id'],
 				'score' => $params['score'],
 				'review_text' => $params['review'],
@@ -39,11 +40,12 @@ class ReviewController extends BaseController{
 		Redirect::to('/book/'.$review->book_id, array('message' => 'Your review was added!'));
 	}
 
-	public static function update($id){
+	public static function update(){
 		$params = $_POST;
-		Kint::dump($params);
+		$user = self::get_user_logged_in();
+		Kint::dump($user);
 		$review = new Review(array(
-				'reader_id' => $id,
+				'reader_id' => $user->id,
 				'book_id' => $params['book_id'],
 				'score' => $params['score'],
 				'review_text' => $params['review'],
