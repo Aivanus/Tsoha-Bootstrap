@@ -48,7 +48,7 @@
     BookController::showBook($id);
   });
 
-  $routes->get('/myreviews', function() {
+  $routes->get('/myreviews', 'check_logged_in', function() {
     ReviewController::myReviews();
   });
 
