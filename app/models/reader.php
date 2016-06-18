@@ -28,6 +28,11 @@ class Reader extends BaseModel{
 	}
 
 	public function save(){
+
+		if(!$this->validate_name_is_unique()){
+			return false;
+		}
+
 		$query = DB::connection()->prepare('
 			INSERT INTO Reader (username, password) 
 				VALUES (:username, :password) 
@@ -36,6 +41,8 @@ class Reader extends BaseModel{
 		$query->execute(array('username' => $this->username, 'password' => $this->password));
 		$row = $query->fetch();
 		$this->id = $row['id'];
+
+		return true;
 	}
 
 	public static function authenticate($username, $password){
@@ -51,5 +58,18 @@ class Reader extends BaseModel{
 		}else{
 	  		return null;
 		}
+	}
+
+	public function validate_name_is_unique(){
+		$query = DB::connection()->prepare('SELECT * FROM Reader WHERE username = :username LIMIT 1');
+		$query->execute(array('username' => $this->username));
+		$row = $query->fetch();
+
+		if($row){
+			return false;
+		}
+		
+		return true;
+		
 	}
 }

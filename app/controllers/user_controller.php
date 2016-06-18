@@ -17,7 +17,7 @@ class UserController extends BaseController{
 
 
 	    if(!$user){
-	      View::make('user/login.html', array('error' => 'Väärä käyttäjätunnus tai salasana!', 'username' => $params['username']));
+	      View::make('user/login.html', array('error' => 'Invalid username or password!', 'username' => $params['username']));
 	    }else{
 	      $_SESSION['user'] = $user->id;
 
@@ -37,12 +37,15 @@ class UserController extends BaseController{
 				'password' => $params['password']
 			));
 
-		$reader->save();
+		if($reader->save()){
 
-		$reader = Reader::authenticate($params['username'], $params['password']);
-		$_SESSION['user'] = $reader->id;
+			$reader = Reader::authenticate($params['username'], $params['password']);
+			$_SESSION['user'] = $reader->id;
 
-		Redirect::to('/', array('success' => $reader->username.' welcome to Reading List!'));
+			Redirect::to('/', array('success' => $reader->username.' welcome to Reading List!'));
+		}else{
+			View::make('user/register.html', array('error' => 'Username is already in use!', 'username' => $params['username']));
+		}
 	}
 
 }
