@@ -40,6 +40,10 @@
     UserController::userPage();
   });
 
+  $routes->get('/account', 'check_logged_in', function(){
+    UserController::account();
+  });
+
   //$routes->get('/register', function() {
   	//HelloWorldController::register();
   //});

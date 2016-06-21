@@ -20,6 +20,10 @@ class UserController extends BaseController{
 		View::make('user/user_page.html');
 	}
 
+	public static function account(){
+		View::make('user/account.html');
+	}
+
 	public static function handle_login(){
 	    $params = $_POST;
 
