@@ -12,6 +12,9 @@
     HelloWorldController::sandbox();
   });
 
+
+
+
   $routes->get('/login', function(){
     UserController::login();
   });
@@ -48,6 +51,9 @@
   	//HelloWorldController::register();
   //});
 
+
+
+
   $routes->get('/books', function() {
     BookController::listBooks();
   });
@@ -76,6 +82,9 @@
     BookController::showBook($id);
   });
 
+
+
+
   $routes->get('/myreviews', 'check_logged_in', function() {
     ReviewController::myReviews();
   });
@@ -99,5 +108,9 @@
   $routes->get('/review/new/:id', function($id) {
     ReviewController::newReview($id);
   }); 
+
+  $routes->get('/review/read/:id', function($id) {
+    ReviewController::showReview($id);
+  });
 
    

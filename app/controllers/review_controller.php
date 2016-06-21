@@ -23,6 +23,11 @@ class ReviewController extends BaseController{
 		View::make('review/my_reviews.html', array('reviews' => $reviews));
 	}
 
+	public static function showReview($id){
+		$review = Review::find($id);
+		View::make('review/read.html', array('review' => $review));
+	}
+
 	public static function store(){
 		$params = $_POST;
 		$user = self::get_user_logged_in();

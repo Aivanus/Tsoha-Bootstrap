@@ -7,7 +7,6 @@
       <tr>
         <th>Title</th>
         <th>Score</th>
-        <th>Review</th>
         <th>Date</th>
         <th></th>
       </tr>
@@ -18,7 +17,6 @@
       <tr>
         <td><a href="{{base_path}}/book/{{review.book_id}}">{{review.getTitle()}}</td>
         <td>{{review.score}}</td>
-        <td><a href="#review_text">{{review.review_text}}</td>
         <td>{{review.reviewed}}</td>
         <th>
             <form method="get" action="{{base_path}}/review/edit/{{review.id}}" style="display: inline-block;">
