@@ -36,6 +36,10 @@
   	//HelloWorldController::register();
   //});
 
+  $routes->get('/books', function() {
+    BookController::listBooks();
+  });
+
   $routes->get('/mybook', 'check_logged_in', function() {
     BookController::readingList();
   });

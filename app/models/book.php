@@ -10,7 +10,7 @@ class Book extends BaseModel{
 	}
 
 	public static function all(){
-		$query = DB::connection()->prepare('SELECT * FROM Book');
+		$query = DB::connection()->prepare('SELECT * FROM Book ORDER BY Book.title');
 		$query->execute();
 		$rows = $query->fetchAll();
 		$books = array();

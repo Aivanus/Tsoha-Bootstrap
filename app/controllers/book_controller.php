@@ -63,6 +63,11 @@ class BookController extends BaseController{
 
 	}
 
+	public static function listBooks(){
+		$books = Book::all();
+		View::make('book/book_list.html', array('books' => $books));
+	}
+
 	public static function remove_from_list($id){
 	    $mybook = new MyBook(array('id' => $id));
 	    $mybook->destroy();
@@ -70,10 +75,10 @@ class BookController extends BaseController{
 	    Redirect::to('/mybook', array('message' => 'Book was removed from your list!'));
   }
 
-  public static function changeStatus($id){
-  	$mybook = new MyBook(array('id' => $id));
-  	$mybook->changeStatus();
+	public static function changeStatus($id){
+	  	$mybook = new MyBook(array('id' => $id));
+	  	$mybook->changeStatus();
 
-  	Redirect::to('/mybook', array('success' => 'Status of the book upadated!'));
+	  	Redirect::to('/mybook', array('success' => 'Status of the book upadated!'));
   }
 }
