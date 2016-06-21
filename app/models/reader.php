@@ -7,6 +7,23 @@ class Reader extends BaseModel{
 		parent::__construct($attributes);
 	}
 
+	public static function all(){
+		$query = DB::connection()->prepare('SELECT * FROM Reader ORDER BY Reader.username');
+		$query->execute();
+		$rows = $query->fetchAll();
+		$users = array();
+
+		foreach ($rows as $row) {
+			$users[] = new Reader(array(
+				'id' => $row['id'],
+				'username' => $row['username'],
+				'password' => $row['password']
+			));		
+		}
+
+		return $users;
+	}
+
 	public static function find($id){
 		$query = DB::connection()->prepare(
 			'SELECT * FROM Reader WHERE id = :id LIMIT 1'
@@ -25,6 +42,15 @@ class Reader extends BaseModel{
 		}
 
 		return null;
+	}
+
+	public function getReviewCount(){
+		$query = DB::connection()->prepare(
+			'SELECT COUNT(*) FROM Review WHERE Review.reader_id = :id;'
+			);
+		$query->execute(array('id' => $this->id));
+		$row = $query->fetch();
+		return $row[0];
 	}
 
 	public function save(){
@@ -50,7 +76,7 @@ class Reader extends BaseModel{
 		$query->execute(array('username' => $username, 'password' => $password));
 		$row = $query->fetch();
 		if($row){
-	 		return new User(array(
+	 		return new Reader(array(
 				'id' => $row['id'],
 				'username' => $row['username'],
 				'password' => $row['password']

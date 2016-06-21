@@ -10,6 +10,12 @@ class UserController extends BaseController{
 		View::make('user/register.html');
 	}
 
+	public static function userList(){
+		$users = Reader::all();
+		//Kint::dump($users);
+		View::make('user/user_list.html', array('users' => $users ));
+	}
+
 	public static function handle_login(){
 	    $params = $_POST;
 

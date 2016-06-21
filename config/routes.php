@@ -32,6 +32,10 @@
     UserController::createUser();
   });
 
+  $routes->get('/user_list', function(){
+    UserController::userList();
+  });
+
   //$routes->get('/register', function() {
   	//HelloWorldController::register();
   //});
