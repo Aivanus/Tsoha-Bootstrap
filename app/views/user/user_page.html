@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{user_logged_in.username}}'s User Page</h1>
+
+  <h2><a href="{{base_path}}/mybook">Reading List</a></h2>
+  <h2><a href="{{base_path}}/myreviews">My Reviews</a></h2>
+  
+  <h2>Stats</h2>
+  
+  <dl class="dl-horizontal">
+    <dt>Books read</dt>
+    <dd>NaN</dd>
+    <dt>Reviews</dt>
+    <dd>{{user_logged_in.getReviewCount()}}</dd>
+  </dl>
+
+{% endblock %}
