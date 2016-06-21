@@ -44,6 +44,14 @@ class UserController extends BaseController{
 	    Redirect::to('/login', array('success' => 'Logged out!'));
 	}
 
+	public static function changePassword(){
+		$params = $_POST;
+		$user = self::get_user_logged_in();
+		Reader::updatePassword($params['newPassword'], $user->id);
+
+		Redirect::to('/account', array('success' => 'Your password was changed!'));
+	}
+
 	public static function createUser(){
 		$params = $_POST;
 		$reader = new Reader(array(

@@ -48,7 +48,6 @@ class ReviewController extends BaseController{
 	public static function update(){
 		$params = $_POST;
 		$user = self::get_user_logged_in();
-		Kint::dump($user);
 		$review = new Review(array(
 				'reader_id' => $user->id,
 				'book_id' => $params['book_id'],

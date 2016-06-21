@@ -86,6 +86,15 @@ class Reader extends BaseModel{
 		}
 	}
 
+	public static function updatePassword($password, $id){
+		$query = DB::connection()->prepare('
+			UPDATE Reader SET
+				password = :password
+				WHERE id = :id
+		');
+		$query->execute(array('id' => $id, 'password' => $password));
+	}
+
 	public function validate_name_is_unique(){
 		$query = DB::connection()->prepare('SELECT * FROM Reader WHERE username = :username LIMIT 1');
 		$query->execute(array('username' => $this->username));

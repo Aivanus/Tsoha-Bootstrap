@@ -47,6 +47,10 @@
     UserController::account();
   });
 
+  $routes->post('/account', 'check_logged_in', function(){
+    UserController::changePassword();
+  });
+
   //$routes->get('/register', function() {
   	//HelloWorldController::register();
   //});
