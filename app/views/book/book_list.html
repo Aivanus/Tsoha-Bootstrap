@@ -19,7 +19,11 @@
             <td>{{book.author}}</td>
             <td>{{book.getRating()}}</td>
             <td>
-                <form method="post" action="#" style="display: inline-block;">
+                <form method="post" action="{{base_path}}/mybook" style="display: inline-block;">
+                    <div id="hidden_form_container" style="display:none;">
+                        <input name="title" value="{{book.title}}">
+                        <input name="author" value="{{book.author}}">
+                    </div>
                     <button type="submit" class="btn btn-success btn-sm">Add</button>
                 </form>
             </td>
