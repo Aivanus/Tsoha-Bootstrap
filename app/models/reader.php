@@ -32,7 +32,7 @@ class Reader extends BaseModel{
 		$row = $query->fetch();
 
 		if($row){
-			$user = new User(array(
+			$user = new Reader(array(
 				'id' => $row['id'],
 				'username' => $row['username'],
 				'password' => $row['password']
@@ -44,9 +44,22 @@ class Reader extends BaseModel{
 		return null;
 	}
 
+	public static function test(){
+		return 1337;
+	}
+
 	public function getReviewCount(){
 		$query = DB::connection()->prepare(
 			'SELECT COUNT(*) FROM Review WHERE Review.reader_id = :id;'
+			);
+		$query->execute(array('id' => $this->id));
+		$row = $query->fetch();
+		return $row[0];
+	}
+
+	public function getBooksReadCount(){
+		$query = DB::connection()->prepare(
+			'SELECT COUNT(*) FROM MyBook WHERE reader_id = :id AND status = 1;'
 			);
 		$query->execute(array('id' => $this->id));
 		$row = $query->fetch();
