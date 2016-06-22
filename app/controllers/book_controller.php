@@ -27,6 +27,12 @@ class BookController extends BaseController{
 				'added' => date("Y-m-d")
 			));
 
+			$errors = $mybook->errors();
+
+			if(count($errors) > 0){
+				Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
+			}
+
 			$mybook->save();
 
 		}else{
@@ -50,11 +56,17 @@ class BookController extends BaseController{
 					'added' => date("Y-m-d")
 				));
 
-				$mybook->save();
+				$errors = $mybook->errors();
+
+				if(count($errors) > 0){
+					Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
 				}
+
+				$mybook->save();
+			}
 		}
 
-		Redirect::to('/book/' . $mybook->book_id, array('message' => $mybook->getTitle().' was added to your reading list!'));
+		Redirect::to('/book/' . $mybook->book_id, array('success' => $mybook->getTitle().' was added to your reading list!'));
 	}
 
 	public static function showBook($id){

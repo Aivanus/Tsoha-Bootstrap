@@ -6,6 +6,7 @@ class MyBook extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+		$this->validators = array('validate_book_not_in_list');
 		$this->title = $this->getTitle();
 		$this->author = $this->getAuthor();
 	}
@@ -69,6 +70,7 @@ class MyBook extends BaseModel{
 		return $row[0];
 	}
 
+
 	public function save(){
 		$query = DB::connection()->prepare('INSERT INTO MyBook (reader_id, book_id, status, added) 
 			VALUES (:reader_id, :book_id, :status, :added) RETURNING id');
@@ -100,5 +102,17 @@ class MyBook extends BaseModel{
 				WHERE id = :id
 		');
 		$query->execute(array('status' => $this->status, 'id' => $this->id));
+	}
+
+	public function validate_book_not_in_list(){
+		$query = DB::connection()->prepare(
+			'SELECT * FROM MyBook WHERE book_id = :book_id AND reader_id = :reader_id LIMIT 1'
+			);
+		$query->execute(array('book_id' => $this->book_id, 'reader_id' => $this->reader_id));
+		$row = $query->fetch();
+
+		if($row){
+			return "This book is already on your list!";
+		}
 	}
 }
