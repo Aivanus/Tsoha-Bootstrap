@@ -66,29 +66,31 @@
     BookController::listBooks();
   });
 
+  $routes->get('/book/:id', function($id) {
+    BookController::showBook($id);
+  });
+
   $routes->get('/mybook', 'check_logged_in', function() {
     BookController::readingList();
   });
 
-  $routes->post('/mybook', function(){
+  $routes->post('/mybook', 'check_logged_in',function(){
     BookController::store();
   });
 
-  $routes->post('/mybook/destroy/:id', function($id){
+  $routes->post('/mybook/destroy/:id', 'check_logged_in',function($id){
     BookController::remove_from_list($id);
   });
 
-  $routes->post('/mybook/status/:id', function($id){
+  $routes->post('/mybook/status/:id', 'check_logged_in',function($id){
     BookController::changeStatus($id);
   });
 
-  $routes->get('/mybook/add_book', function() {
+  $routes->get('/mybook/add_book', 'check_logged_in',function() {
     BookController::addBook();
   });
 
-  $routes->get('/book/:id', function($id) {
-    BookController::showBook($id);
-  });
+
 
 
 
@@ -97,19 +99,19 @@
     ReviewController::myReviews();
   });
 
-  $routes->post('/review', function(){
+  $routes->post('/review', 'check_logged_in',function(){
     ReviewController::store();
   });
 
-  $routes->post('/review/edit/:id', function(){
+  $routes->post('/review/edit/:id', 'check_logged_in',function(){
     ReviewController::update();
   });
 
-  $routes->post('/review/:id/destroy', function($id){
+  $routes->post('/review/:id/destroy', 'check_logged_in',function($id){
     ReviewController::deleteReview($id);
   });
 
-  $routes->get('/review/edit/:id', function($id){
+  $routes->get('/review/edit/:id', 'check_logged_in',function($id){
     ReviewController::editReview($id);
   });
 
@@ -117,7 +119,7 @@
     ReviewController::reviewList($id);
   });    
 
-  $routes->get('/review/new/:id', function($id) {
+  $routes->get('/review/new/:id', 'check_logged_in',function($id) {
     ReviewController::newReview($id);
   }); 
 
