@@ -10,14 +10,18 @@
       <label>Score</label>
       	{% for i in range(1, 5) %}
 	    <label class="radio-inline">
-	  		<input type="radio" name="score" id="inlineRadio{{i}}" value="{{i}}"> {{i}}
+        {% if review.score == i %}
+          <input type="radio" name="score" id="inlineRadio{{i}}" value="{{i}}" checked="checked"> {{i}}
+        {% else %}  
+          <input type="radio" name="score" id="inlineRadio{{i}}" value="{{i}}"> {{i}}
+        {% endif %}
 		</label>
 		{% endfor %}
     </div>
 
     <div class="form-group">
       <label>Review</label>
-      	<textarea class="form-control" rows="3" name="review"></textarea>
+      	<textarea class="form-control" rows="3" name="review">{{review.review_text}}</textarea>
     </div>
     
     <div class="form-group">
