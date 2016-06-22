@@ -5,6 +5,7 @@ class Review extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+		$this->validators = array('validate_score', 'validate_not_reviewed');
 	}
 
 	public static function all(){
@@ -135,5 +136,21 @@ class Review extends BaseModel{
 				WHERE reader_id = :reader_id AND book_id = :book_id
 		');
 		$query->execute(array('score' => $this->score, 'review_text' => $this->review_text, 'reviewed' => $this->reviewed, 'reader_id' => $this->reader_id, 'book_id' => $this->book_id));
+	}
+
+	public function validate_score(){
+		return parent::validate_field_not_null($this->score, 'You must give a score!');
+	}
+
+	public function validate_not_reviewed(){
+		$query = DB::connection()->prepare(
+			'SELECT id FROM Review WHERE book_id = :book_id AND reader_id = :reader_id'
+		);
+		$query->execute(array('book_id' => $this->book_id, 'reader_id' => $this->reader_id));
+		$row = $query->fetch();
+
+		if($row){
+			return "You have already reviewed this book!";
+		}
 	}  
 }

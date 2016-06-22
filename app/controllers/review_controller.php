@@ -40,9 +40,15 @@ class ReviewController extends BaseController{
 				'reviewed' => date("Y-m-d")
 			));
 
+		$errors = $review->errors();
+
+		if(count($errors) > 0){
+			Redirect::to('/myreviews', array('errors' => $errors));
+		}
+
 		$review->save();
 
-		Redirect::to('/myreviews', array('message' => 'Your review was added!'));
+		Redirect::to('/myreviews', array('success' => 'Your review was added!'));
 	}
 
 	public static function update(){
