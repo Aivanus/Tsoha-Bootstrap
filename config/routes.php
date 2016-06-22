@@ -51,6 +51,10 @@
     UserController::changePassword();
   });
 
+  $routes->post('/user/destroy', 'check_logged_in', function(){
+    UserController::deleteAccount();
+  });
+
   //$routes->get('/register', function() {
   	//HelloWorldController::register();
   //});

@@ -24,6 +24,13 @@ class UserController extends BaseController{
 		View::make('user/account.html');
 	}
 
+	public static function deleteAccount(){
+		$user = self::get_user_logged_in();
+		$_SESSION['user'] = null;
+		$user->destroy();
+		Redirect::to('/', array('error' => 'Your account and all information has been deleted!'));
+	}
+
 	public static function handle_login(){
 	    $params = $_POST;
 

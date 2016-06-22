@@ -84,6 +84,22 @@ class Reader extends BaseModel{
 		return true;
 	}
 
+	public static function updatePassword($password, $id){
+		$query = DB::connection()->prepare('
+			UPDATE Reader SET
+				password = :password
+				WHERE id = :id
+		');
+		$query->execute(array('id' => $id, 'password' => $password));
+	}
+
+	public function destroy(){
+		$query = DB::connection()->prepare(
+			'DELETE FROM Reader WHERE id = :id'
+			);
+		$query->execute(array('id' => $this->id));
+	}
+
 	public static function authenticate($username, $password){
 		$query = DB::connection()->prepare('SELECT * FROM Reader WHERE username = :username AND password = :password LIMIT 1');
 		$query->execute(array('username' => $username, 'password' => $password));
@@ -97,15 +113,6 @@ class Reader extends BaseModel{
 		}else{
 	  		return null;
 		}
-	}
-
-	public static function updatePassword($password, $id){
-		$query = DB::connection()->prepare('
-			UPDATE Reader SET
-				password = :password
-				WHERE id = :id
-		');
-		$query->execute(array('id' => $id, 'password' => $password));
 	}
 
 	public function validate_name_is_unique(){
