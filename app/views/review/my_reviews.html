@@ -11,6 +11,7 @@
         <th>Date</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
 
@@ -20,6 +21,7 @@
         <td><a href="{{base_path}}/book/{{review.book_id}}">{{review.getTitle()}}</td>
         <td>{{review.score}}</td>
         <td>{{review.reviewed}}</td>
+        <td><a href="{{base_path}}/review/read/{{review.id}}" class="btn btn-success btn-sm">Read</a></td>
         <td><a href="{{base_path}}/review/edit/{{review.id}}" class="btn btn-info btn-sm">Edit</a></td>
         <td>{{forms.destroy_button("#{base_path}/review/#{review.id}/destroy")}}</td>
       {% endfor %}
