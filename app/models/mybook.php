@@ -86,10 +86,6 @@ class MyBook extends BaseModel{
 		$query->execute(array('id' => $this->id));
 	}
 
-	public function update(){
-
-	}
-
 	public function changeStatus(){
 		if ($this->status == 0){
 			$this->status = 1;

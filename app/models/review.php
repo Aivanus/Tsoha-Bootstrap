@@ -138,6 +138,13 @@ class Review extends BaseModel{
 		$query->execute(array('score' => $this->score, 'review_text' => $this->review_text, 'reviewed' => $this->reviewed, 'reader_id' => $this->reader_id, 'book_id' => $this->book_id));
 	}
 
+	public function destroy(){
+		$query = DB::connection()->prepare(
+			'DELETE FROM Review WHERE id = :id'
+			);
+		$query->execute(array('id' => $this->id));
+	}
+
 	public function validate_score(){
 		return parent::validate_field_not_null($this->score, 'You must give a score!');
 	}

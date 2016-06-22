@@ -101,6 +101,10 @@
     ReviewController::update();
   });
 
+  $routes->post('/review/:id/destroy', function($id){
+    ReviewController::deleteReview($id);
+  });
+
   $routes->get('/review/edit/:id', function($id){
     ReviewController::editReview($id);
   });

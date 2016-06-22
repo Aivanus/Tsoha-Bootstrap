@@ -1,3 +1,4 @@
+{% import "macros/forms.html" as forms %}
 {% extends "base.html" %}
 {% block content %}
   <h1>My Reviews</h1>
@@ -9,6 +10,7 @@
         <th>Score</th>
         <th>Date</th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
 
@@ -18,11 +20,8 @@
         <td><a href="{{base_path}}/book/{{review.book_id}}">{{review.getTitle()}}</td>
         <td>{{review.score}}</td>
         <td>{{review.reviewed}}</td>
-        <th>
-            <form method="get" action="{{base_path}}/review/edit/{{review.id}}" style="display: inline-block;">
-              <button type="submit" class="btn btn-danger btn-sm">Edit</button>
-            </form>
-        </th>
+        <td><a href="{{base_path}}/review/edit/{{review.id}}" class="btn btn-info btn-sm">Edit</a></td>
+        <td>{{forms.destroy_button("#{base_path}/review/#{review.id}/destroy")}}</td>
       {% endfor %}
     </tbody>
   </table>

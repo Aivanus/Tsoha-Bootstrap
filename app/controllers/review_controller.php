@@ -66,4 +66,11 @@ class ReviewController extends BaseController{
 
 		Redirect::to('/myreviews', array('message' => 'Your review was updated!'));
 	}
+
+	public static function deleteReview($id){
+	    $mybook = new Review(array('id' => $id));
+	    $mybook->destroy();
+
+	    Redirect::to('/myreviews', array('message' => 'Review was deleted!'));
+  	}
 }
