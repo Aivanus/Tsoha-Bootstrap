@@ -1,14 +1,19 @@
 <?php
 class Reader extends BaseModel{
 
-	public $id, $username, $password;
+	public $id, $username, $password, $reviewCount;
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
 	}
 
 	public static function all(){
-		$query = DB::connection()->prepare('SELECT * FROM Reader ORDER BY Reader.username');
+		$query = DB::connection()->prepare(
+			'SELECT r.*, COUNT(rev.reader_id) AS reviews FROM Reader r 
+				LEFT JOIN Review rev ON r.id = rev.reader_id 
+				GROUP BY r.id, username, password 
+				ORDER BY reviews DESC'
+		);
 		$query->execute();
 		$rows = $query->fetchAll();
 		$users = array();
@@ -44,9 +49,22 @@ class Reader extends BaseModel{
 		return null;
 	}
 
-	public static function test(){
-		return 1337;
-	}
+	// public static function getLeaderboard(){
+	// 	$query = DB::connection()->prepare('SELECT * FROM Reader ORDER BY Reader.username');
+	// 	$query->execute();
+	// 	$rows = $query->fetchAll();
+	// 	$users = array();
+
+	// 	foreach ($rows as $row) {
+	// 		$users[] = new Reader(array(
+	// 			'id' => $row['id'],
+	// 			'username' => $row['username'],
+	// 			'password' => $row['password']
+	// 		));		
+	// 	}
+
+	// 	return $users;
+	// }
 
 	public function getReviewCount(){
 		$query = DB::connection()->prepare(
