@@ -12,8 +12,8 @@ CREATE TABLE Book(
 
 CREATE TABLE Review(
 	id SERIAL PRIMARY KEY,
-	reader_id INTEGER REFERENCES Reader(id),
-	book_id INTEGER REFERENCES Book(id),
+	reader_id INTEGER REFERENCES Reader(id) ON DELETE CASCADE,
+	book_id INTEGER REFERENCES Book(id) ON DELETE CASCADE,
 	score INTEGER NOT NULL,
 	review_text text,
 	reviewed DATE NOT NULL
@@ -21,8 +21,8 @@ CREATE TABLE Review(
 
 CREATE TABLE MyBook(
 	id SERIAL PRIMARY KEY,
-	reader_id INTEGER REFERENCES Reader(id),
-	book_id INTEGER REFERENCES Book(id),
+	reader_id INTEGER REFERENCES Reader(id) ON DELETE CASCADE,
+	book_id INTEGER REFERENCES Book(id) ON DELETE CASCADE,
 	status INTEGER NOT NULL,
 	added DATE NOT NULL
 );
