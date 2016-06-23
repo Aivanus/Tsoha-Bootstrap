@@ -39,3 +39,32 @@
 	</div>
   </form>
 {% endmacro %}
+
+{% macro review_form(action, hiddenValue, reviewScore, textField) %}
+  <form method="post" action="{{action}}">
+    <div id="hidden_form_container" style="display:none;">
+    	<input name="book_id" value="{{hiddenValue}}">
+  	</div>
+      <div class="form-group">
+        <label>Score</label>
+        {% for i in range(1, 5) %}
+  	    <label class="radio-inline">
+          {% if reviewScore == i or i == 1 %}
+            <input type="radio" name="score" id="inlineRadio{{i}}" value="{{i}}" checked="checked"> {{i}}
+          {% else %}  
+            <input type="radio" name="score" id="inlineRadio{{i}}" value="{{i}}"> {{i}}
+          {% endif %}
+  		  </label>
+  		{% endfor %}
+    </div>
+
+    <div class="form-group">
+      <label>Review</label>
+      	<textarea class="form-control" rows="3" name="review">{{textField|default('')}}</textarea>
+    </div>
+    
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+{% endmacro %}
