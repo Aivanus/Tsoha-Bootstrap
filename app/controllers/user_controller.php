@@ -54,7 +54,14 @@ class UserController extends BaseController{
 	public static function changePassword(){
 		$params = $_POST;
 		$user = self::get_user_logged_in();
-		Reader::updatePassword($params['newPassword'], $user->id);
+		$dummy = new Reader(array('username' => $user->username, 'password' => $params['newPassword']));
+		$error = $dummy->validate_password_not_empty();
+
+		if($error){
+			Redirect::to('/account', array('error' => $error));
+		}
+
+		$user->updatePassword($params['newPassword']);
 
 		Redirect::to('/account', array('success' => 'Your password was changed!'));
 	}

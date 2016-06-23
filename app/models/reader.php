@@ -91,18 +91,18 @@ class Reader extends BaseModel{
 				VALUES (:username, :password) 
 				RETURNING id
 		');
-		$query->execute(array('username' => $this->username, 'password' => $this->password));
+		$query->execute(array('username' => trim($this->username), 'password' => trim($this->password)));
 		$row = $query->fetch();
 		$this->id = $row['id'];
 	}
 
-	public static function updatePassword($password, $id){
+	public function updatePassword($password){
 		$query = DB::connection()->prepare('
 			UPDATE Reader SET
 				password = :password
 				WHERE id = :id
 		');
-		$query->execute(array('id' => $id, 'password' => $password));
+		$query->execute(array('id' => $this->id, 'password' => $password));
 	}
 
 	public function destroy(){
