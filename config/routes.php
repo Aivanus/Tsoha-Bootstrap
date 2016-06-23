@@ -55,11 +55,6 @@
     UserController::deleteAccount();
   });
 
-  //$routes->get('/register', function() {
-  	//HelloWorldController::register();
-  //});
-
-
 
 
   $routes->get('/books', function() {
@@ -93,7 +88,13 @@
 
 
 
+  $routes->get('/review/list/:id', function($id) {
+    ReviewController::reviewList($id);
+  });
 
+  $routes->get('/review/read/:id', function($id) {
+    ReviewController::showReview($id);
+  }); 
 
   $routes->get('/myreviews', 'check_logged_in', function() {
     ReviewController::myReviews();
@@ -115,16 +116,10 @@
     ReviewController::editReview($id);
   });
 
-  $routes->get('/review/list/:id', function($id) {
-    ReviewController::reviewList($id);
-  });    
-
   $routes->get('/review/new/:id', 'check_logged_in',function($id) {
     ReviewController::newReview($id);
   }); 
 
-  $routes->get('/review/read/:id', function($id) {
-    ReviewController::showReview($id);
-  });
+
 
    
