@@ -28,10 +28,10 @@ class ReviewController extends BaseController{
 		View::make('review/read.html', array('review' => $review));
 	}
 
+	// Funktio, joka tallentaa arvosteluja
 	public static function store(){
 		$params = $_POST;
 		$user = self::get_user_logged_in();
-		//Kint::dump($params);
 		$review = new Review(array(
 				'reader_id' => $user->id,
 				'book_id' => $params['book_id'],
@@ -47,7 +47,6 @@ class ReviewController extends BaseController{
 		}
 
 		$review->save();
-
 		Redirect::to('/myreviews', array('success' => 'Your review was added!'));
 	}
 
@@ -63,7 +62,6 @@ class ReviewController extends BaseController{
 			));
 
 		$review->update();
-
 		Redirect::to('/myreviews', array('message' => 'Your review was updated!'));
 	}
 
