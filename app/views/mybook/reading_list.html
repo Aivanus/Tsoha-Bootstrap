@@ -17,8 +17,8 @@
     <tbody>
         {% for book in books %}
         <tr>
-            <td><a href="{{base_path}}/book/{{book.book_id}}">{{book.title}}</td>
-            <td>{{book.author}}</td>
+            <td><a href="{{base_path}}/book/{{book.book_id}}">{{book.getTitle()}}</td>
+            <td>{{book.getAuthor()}}</td>
             <td>
                 {% if book.status == 1 %}
 <!--                 <label class="label label-success">Read</label> -->

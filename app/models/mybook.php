@@ -2,17 +2,16 @@
 
 class MyBook extends BaseModel{
 
-	public $id, $reader_id, $book_id, $status, $added, $title, $author;
+	public $id, $reader_id, $book_id, $status, $added;
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
 		$this->validators = array('validate_book_not_in_list');
-		$this->title = $this->getTitle();
-		$this->author = $this->getAuthor();
 	}
 
+	// Hakee ja palautta kaikki käyttäjän lukulistalla olevat kirjat lisäämisjärjestyksessä 
 	public static function all($user){
-		$query = DB::connection()->prepare('SELECT * FROM MyBook WHERE reader_id = :reader_id');
+		$query = DB::connection()->prepare('SELECT * FROM MyBook WHERE reader_id = :reader_id ORDER BY added');
 		$query->execute(array('reader_id' => $user->id));
 		$rows = $query->fetchAll();
 		$mybooks = array();
@@ -26,10 +25,10 @@ class MyBook extends BaseModel{
 				'added' => $row['added']
 			));		
 		}
-
 		return $mybooks;
 	}
 
+	// Hakee tietyn lukulista kirjan id:n perusteella
 	public static function find($id){
 		$query = DB::connection()->prepare(
 			'SELECT * FROM MyBook WHERE id = :id LIMIT 1'
@@ -48,10 +47,10 @@ class MyBook extends BaseModel{
 
 			return $mybook;
 		}
-
 		return null;
 	} 
 
+	// Hakee kirjan nimen
 	public function getTitle(){
 		$query = DB::connection()->prepare(
 			'SELECT title FROM Book WHERE id = :id LIMIT 1'
@@ -61,6 +60,7 @@ class MyBook extends BaseModel{
 		return $row[0];
 	}
 
+	// Hakee kirjan kirjoittajan
 	public function getAuthor(){
 		$query = DB::connection()->prepare(
 			'SELECT author FROM Book WHERE id = :id LIMIT 1'
@@ -70,7 +70,7 @@ class MyBook extends BaseModel{
 		return $row[0];
 	}
 
-
+	// Tallentaa kirjan lukulistaan
 	public function save(){
 		$query = DB::connection()->prepare('INSERT INTO MyBook (reader_id, book_id, status, added) 
 			VALUES (:reader_id, :book_id, :status, :added) RETURNING id');
@@ -79,6 +79,7 @@ class MyBook extends BaseModel{
 		$this->id = $row['id'];
 	}
 
+	// Poistaa kirjan lukulistalta
 	public function destroy(){
 		$query = DB::connection()->prepare(
 			'DELETE FROM MyBook WHERE id = :id'
@@ -86,6 +87,7 @@ class MyBook extends BaseModel{
 		$query->execute(array('id' => $this->id));
 	}
 
+	// Asettaa kirjan luetuksi
 	public function changeStatus(){
 		if ($this->status == 0){
 			$this->status = 1;
@@ -100,6 +102,7 @@ class MyBook extends BaseModel{
 		$query->execute(array('status' => $this->status, 'id' => $this->id));
 	}
 
+	// Validaattorit
 	public function validate_book_not_in_list(){
 		$query = DB::connection()->prepare(
 			'SELECT * FROM MyBook WHERE book_id = :book_id AND reader_id = :reader_id LIMIT 1'
