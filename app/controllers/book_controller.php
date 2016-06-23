@@ -8,17 +8,16 @@ class BookController extends BaseController{
 		View::make('mybook/reading_list.html', array('books' => $mybooks)); 
 	}
 
+	// Esittää kirjan lisäämissivun
 	public static function addBook(){
 		View::make('mybook/add_book.html');
 	}
 
-	// Metodi joka tallentaa kirjan lukulistaan. Jos kirjaa ei ole vielä olemassa,
+	// Funktio joka tallentaa kirjan lukulistaan. Jos kirjaa ei ole vielä olemassa,
 	// se luodaan ja lisätään tietokantaan
 	public static function store(){
 		$params = $_POST;
 		$user = self::get_user_logged_in();
-		$title = $params['title'];
-		$author = $params['author'];
 		$bookToAdd = Book::find($params['title'], $params['author']);
 		
 		if (is_null($bookToAdd)) {
@@ -42,45 +41,47 @@ class BookController extends BaseController{
 		}
 	}
 
+	// Funktio luo uuden kirjan tietokantaan
 	public static function createBook($params){
 		$new_book = new Book(array(
 				'title' => $params['title'],
 				'author' => $params['author']
 				));
 
-			$errors = $new_book->errors();
+		$errors = $new_book->errors();
 
-			if(count($errors) > 0){
-				Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
-			}else{
-
-				$new_book->save();
-				return $new_book;
-			}
+		if(count($errors) > 0){
+			Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
+		}else{
+			$new_book->save();
+			return $new_book;
+		}
 	}
 
+	// Funktio näyttää kirjan ifosivun
 	public static function showBook($id){
 		$book = Book::findId($id);
 		View::make('book/book_info.html', array('book' => $book));
 
 	}
 
+	// Funktio näyttää kaikkien kirjojen listaussivun
 	public static function listBooks(){
 		$books = Book::all();
 		View::make('book/book_list.html', array('books' => $books));
 	}
 
+	// Funktio, joka osallistuu kirjan poistamiseen lukulistalta
 	public static function remove_from_list($id){
 	    $mybook = new MyBook(array('id' => $id));
 	    $mybook->destroy();
-
 	    Redirect::to('/mybook', array('message' => 'Book was removed from your list!'));
   	}
 
+  	// Funktio, joka osallistuu kirjan muuttamiseen luetuksi
 	public static function changeStatus($id){
 	  	$mybook = new MyBook(array('id' => $id));
 	  	$mybook->changeStatus();
-
 	  	Redirect::to('/mybook', array('success' => 'Status of the book upadated!'));
   	}
 }
