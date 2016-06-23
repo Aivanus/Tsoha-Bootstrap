@@ -12,7 +12,6 @@ class UserController extends BaseController{
 
 	public static function userList(){
 		$users = Reader::all();
-		//Kint::dump($users);
 		View::make('user/user_list.html', array('users' => $users ));
 	}
 
@@ -33,9 +32,7 @@ class UserController extends BaseController{
 
 	public static function handle_login(){
 	    $params = $_POST;
-
 	    $user = Reader::authenticate($params['username'], $params['password']);
-
 
 	    if(!$user){
 	      View::make('user/login.html', array('error' => 'Invalid username or password!', 'username' => $params['username']));
@@ -86,5 +83,4 @@ class UserController extends BaseController{
 			Redirect::to('/', array('success' => $reader->username.' welcome to Reading List!'));
 		}
 	}
-
 }
