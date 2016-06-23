@@ -76,11 +76,8 @@ class UserController extends BaseController{
 			View::make('user/register.html', array('errors' => $errors, 'username' => $params['username']));
 		}else{
 			$reader->save();
-
-			$reader = Reader::authenticate($params['username'], $params['password']);
-			$_SESSION['user'] = $reader->id;
-
-			Redirect::to('/', array('success' => $reader->username.' welcome to Reading List!'));
+			
+			Redirect::to('/', array('success' => 'Your account has been created! Please log in.'));
 		}
 	}
 }

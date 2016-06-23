@@ -122,7 +122,7 @@ class Reader extends BaseModel{
 	// Validaattorit
 	public function validate_username_is_unique(){
 		$query = DB::connection()->prepare('SELECT * FROM Reader WHERE username = :username LIMIT 1');
-		$query->execute(array('username' => $this->username));
+		$query->execute(array('username' => trim($this->username)));
 		$row = $query->fetch();
 
 		if($row){
