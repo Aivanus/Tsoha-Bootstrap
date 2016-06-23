@@ -66,14 +66,17 @@ class UserController extends BaseController{
 				'password' => $params['password']
 			));
 
-		if($reader->save()){
+		$errors = $reader->errors();
+
+		if(count($errors) > 0){
+			View::make('user/register.html', array('errors' => $errors, 'username' => $params['username']));
+		}else{
+			$reader->save();
 
 			$reader = Reader::authenticate($params['username'], $params['password']);
 			$_SESSION['user'] = $reader->id;
 
 			Redirect::to('/', array('success' => $reader->username.' welcome to Reading List!'));
-		}else{
-			View::make('user/register.html', array('error' => 'Username is already in use!', 'username' => $params['username']));
 		}
 	}
 

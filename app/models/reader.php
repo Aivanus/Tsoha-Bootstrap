@@ -5,6 +5,7 @@ class Reader extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+		$this->validators = array('validate_username_is_unique', 'validate_username_not_empty', 'validate_password_not_empty');
 	}
 
 	public static function all(){
@@ -85,11 +86,6 @@ class Reader extends BaseModel{
 	}
 
 	public function save(){
-
-		if(!$this->validate_name_is_unique()){
-			return false;
-		}
-
 		$query = DB::connection()->prepare('
 			INSERT INTO Reader (username, password) 
 				VALUES (:username, :password) 
@@ -98,8 +94,6 @@ class Reader extends BaseModel{
 		$query->execute(array('username' => $this->username, 'password' => $this->password));
 		$row = $query->fetch();
 		$this->id = $row['id'];
-
-		return true;
 	}
 
 	public static function updatePassword($password, $id){
@@ -133,16 +127,21 @@ class Reader extends BaseModel{
 		}
 	}
 
-	public function validate_name_is_unique(){
+	public function validate_username_is_unique(){
 		$query = DB::connection()->prepare('SELECT * FROM Reader WHERE username = :username LIMIT 1');
 		$query->execute(array('username' => $this->username));
 		$row = $query->fetch();
 
 		if($row){
-			return false;
+			return 'Choose another username!';
 		}
-		
-		return true;
-		
+	}
+
+	public function validate_username_not_empty(){
+		return self::validate_field_not_null($this->username, 'Username cannot be empty!'); 
+	}
+
+	public function validate_password_not_empty(){
+		return self::validate_field_not_null($this->password, 'Password cannot be empty!'); 
 	}
 }
