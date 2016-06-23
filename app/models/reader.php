@@ -1,19 +1,21 @@
 <?php
 class Reader extends BaseModel{
 
-	public $id, $username, $password, $reviewCount;
+	public $id, $username, $password;
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
 		$this->validators = array('validate_username_is_unique', 'validate_username_not_empty', 'validate_password_not_empty');
 	}
 
+	// Funktio hakee tietokannasta kaikki käyttäjät ja järjestää ne
+	// kirjoitettujen arvostelujen määrän mukaan 
 	public static function all(){
 		$query = DB::connection()->prepare(
-			'SELECT r.*, COUNT(rev.reader_id) AS reviews FROM Reader r 
+			'SELECT r.* FROM Reader r 
 				LEFT JOIN Review rev ON r.id = rev.reader_id 
 				GROUP BY r.id, username, password 
-				ORDER BY reviews DESC'
+				ORDER BY COUNT(rev.reader_id) DESC'
 		);
 		$query->execute();
 		$rows = $query->fetchAll();
@@ -26,10 +28,10 @@ class Reader extends BaseModel{
 				'password' => $row['password']
 			));		
 		}
-
 		return $users;
 	}
 
+	// Funktio hakee tietyn käyttäjän id:n perusteella
 	public static function find($id){
 		$query = DB::connection()->prepare(
 			'SELECT * FROM Reader WHERE id = :id LIMIT 1'
@@ -46,27 +48,10 @@ class Reader extends BaseModel{
 
 			return $user;
 		}
-
 		return null;
 	}
 
-	// public static function getLeaderboard(){
-	// 	$query = DB::connection()->prepare('SELECT * FROM Reader ORDER BY Reader.username');
-	// 	$query->execute();
-	// 	$rows = $query->fetchAll();
-	// 	$users = array();
-
-	// 	foreach ($rows as $row) {
-	// 		$users[] = new Reader(array(
-	// 			'id' => $row['id'],
-	// 			'username' => $row['username'],
-	// 			'password' => $row['password']
-	// 		));		
-	// 	}
-
-	// 	return $users;
-	// }
-
+	// Funktio hakee käyttäjän kirjoittamien arvostelujen määrän
 	public function getReviewCount(){
 		$query = DB::connection()->prepare(
 			'SELECT COUNT(*) FROM Review WHERE Review.reader_id = :id;'
@@ -76,6 +61,7 @@ class Reader extends BaseModel{
 		return $row[0];
 	}
 
+	// Funktio hakee käyttäjän luekemien kirjojen määrän
 	public function getBooksReadCount(){
 		$query = DB::connection()->prepare(
 			'SELECT COUNT(*) FROM MyBook WHERE reader_id = :id AND status = 1;'
@@ -85,6 +71,7 @@ class Reader extends BaseModel{
 		return $row[0];
 	}
 
+	// Funktio tallentaa uuden käyttäjän 
 	public function save(){
 		$query = DB::connection()->prepare('
 			INSERT INTO Reader (username, password) 
@@ -96,6 +83,7 @@ class Reader extends BaseModel{
 		$this->id = $row['id'];
 	}
 
+	// Funktio vaihtaa käyttäjän salasanan
 	public function updatePassword($password){
 		$query = DB::connection()->prepare('
 			UPDATE Reader SET
@@ -105,6 +93,8 @@ class Reader extends BaseModel{
 		$query->execute(array('id' => $this->id, 'password' => $password));
 	}
 
+	// Funktio poistaa käyttäjän. Kun käyttäjä poistetaan, poistuvat myös hänen
+	// kirjoittamat arvostelut ja lukulistan sisältö
 	public function destroy(){
 		$query = DB::connection()->prepare(
 			'DELETE FROM Reader WHERE id = :id'
@@ -112,6 +102,7 @@ class Reader extends BaseModel{
 		$query->execute(array('id' => $this->id));
 	}
 
+	// Funktio, joka tarkistaa onko halutulla tunnuksella ja salasanalla varustettua käyttäjää olemassa 
 	public static function authenticate($username, $password){
 		$query = DB::connection()->prepare('SELECT * FROM Reader WHERE username = :username AND password = :password LIMIT 1');
 		$query->execute(array('username' => $username, 'password' => $password));
@@ -127,6 +118,7 @@ class Reader extends BaseModel{
 		}
 	}
 
+	// Validaattorit
 	public function validate_username_is_unique(){
 		$query = DB::connection()->prepare('SELECT * FROM Reader WHERE username = :username LIMIT 1');
 		$query->execute(array('username' => $this->username));
