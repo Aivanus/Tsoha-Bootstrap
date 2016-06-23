@@ -34,6 +34,7 @@
     }
 
     public function validate_field_not_null($string, $message){
+      $string = trim($string);
       if($string == '' || $string == null){
         return $message;
       }

@@ -1,6 +1,7 @@
 <?php
 
 class BookController extends BaseController{
+	
 	public static function readingList(){
 		$user = self::get_user_logged_in();
 		$mybooks = MyBook::all($user);
@@ -11,6 +12,8 @@ class BookController extends BaseController{
 		View::make('mybook/add_book.html');
 	}
 
+	// Metodi joka tallentaa kirjan lukulistaan. Jos kirjaa ei ole vielä olemassa,
+	// se luodaan ja lisätään tietokantaan
 	public static function store(){
 		$params = $_POST;
 		$user = self::get_user_logged_in();
@@ -67,6 +70,23 @@ class BookController extends BaseController{
 		}
 
 		Redirect::to('/book/' . $mybook->book_id, array('success' => $mybook->getTitle().' was added to your reading list!'));
+	}
+
+	public static function createBook($params){
+		$new_book = new Book(array(
+				'title' => $params['title'],
+				'author' => $author
+				));
+
+			$errors = $new_book->errors();
+
+			if(count($errors) > 0){
+				Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
+			}else{
+
+				$new_book->save();
+				return $new_book;
+			}
 	}
 
 	public static function showBook($id){
