@@ -22,23 +22,23 @@ class BookController extends BaseController{
 		
 		if (is_null($bookToAdd)) {
 			$bookToAdd = self::createBook($params);
-		}else{
-			$mybook = new MyBook(array(
-				'reader_id' => $user->id,
-				'book_id' => $bookToAdd->id,
-				'status' => 0,
-				'added' => date("Y-m-d")
-			));
-
-			$errors = $mybook->errors();
-
-			if(count($errors) > 0){
-				Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
-			}
-
-			$mybook->save();
-			Redirect::to('/book/' . $mybook->book_id, array('success' => $mybook->getTitle().' was added to your reading list!'));
 		}
+		$mybook = new MyBook(array(
+			'reader_id' => $user->id,
+			'book_id' => $bookToAdd->id,
+			'status' => 0,
+			'added' => date("Y-m-d")
+		));
+
+		$errors = $mybook->errors();
+
+		if(count($errors) > 0){
+			Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
+		}
+
+		$mybook->save();
+		Redirect::to('/book/' . $mybook->book_id, array('success' => $mybook->getTitle().' was added to your reading list!'));
+		
 	}
 
 	// Funktio luo uuden kirjan tietokantaan

@@ -1,3 +1,4 @@
+{% import "macros/forms.html" as forms %}
 {% extends "base.html" %}
 {% block content %}
 <h1>Your reading list</h1>
@@ -21,12 +22,10 @@
             <td>{{book.getAuthor()}}</td>
             <td>
                 {% if book.status == 1 %}
-<!--                 <label class="label label-success">Read</label> -->
                 <form method="post" action='#' style="display: inline-block;">
                     <button type="buttn" class="btn btn-success btn-sm" disabled="disabled">Read</button>
                 </form>
                 {% else %}
-                <!-- <label class="label label-danger">Unread</label> -->
                 <form method="post" action="{{base_path}}/mybook/status/{{book.id}}" style="display: inline-block;">
                     <button type="submit" class="btn btn-danger btn-sm">Unread</button>
                 </form>
@@ -35,9 +34,7 @@
             <td>{{book.added}}</td>
             <td><a class="btn btn-default btn-sm" href="{{base_path}}/review/new/{{book.book_id}}">Rate</a></td>
             <td>
-                <form method="post" action="{{base_path}}/mybook/destroy/{{book.id}}" style="display: inline-block;">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
+                {{forms.destroy_button("#{base_path}/mybook/destroy/#{book.id}")}}
             </td>
         </tr>
         {% endfor %}
