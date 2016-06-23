@@ -1,18 +1,8 @@
+{% import "macros/forms.html" as forms %}
 {% extends "base.html" %}
 {% block content %}
   <h1>Register</h1>
 
-  <form method="post" action="{{base_path}}/register">
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" class="form-control" name="username" value="{{username}}">
-    </div>
+  {{forms.user_info_form("#{base_path}/register","#{username}", "Register")}}
 
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-control" name="password">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
 {% endblock %}
