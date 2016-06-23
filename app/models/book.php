@@ -9,6 +9,7 @@ class Book extends BaseModel{
 		$this->validators = array('validate_title', 'validate_author');
 	}
 
+	// Hakee kaikki kirjat tietokannasta ja järjestää ne aakkosjärjestykseen
 	public static function all(){
 		$query = DB::connection()->prepare('SELECT * FROM Book ORDER BY Book.title');
 		$query->execute();
@@ -22,10 +23,10 @@ class Book extends BaseModel{
 				'author' => $row['author']
 			));		
 		}
-
 		return $books;
 	}
 
+	// Hakee tietokannasta kirjan, jolla on tietty nimi ja kirjoittaja
 	public static function find($title, $author){
 		$query = DB::connection()->prepare(
 			'SELECT * FROM Book 
@@ -44,16 +45,17 @@ class Book extends BaseModel{
 
 			return $book;
 		}
-
 		return null;
 	}
 
+	// Hakee tietokannasta kirjan, id:n perusteella
 	public static function findId($id){
 		$query = DB::connection()->prepare('
 			SELECT * FROM Book WHERE id = :id LIMIT 1
 			');
 		$query->execute(array('id' => $id));
 		$row = $query->fetch();
+
 		if($row){
 			$book = new Book(array(
 				'id' => $row['id'],
@@ -65,6 +67,7 @@ class Book extends BaseModel{
 		return null;
 	}
 
+	// Laskee ja palauttaa kirjan arvostelujen keskiarvon
 	public function getRating(){
 		$query = DB::connection()->prepare('
 			SELECT ROUND(AVG(score), 1) FROM Book 
@@ -76,6 +79,7 @@ class Book extends BaseModel{
 		return $row[0];
 	}
 
+	// Tallentaa kirjan
 	public function save(){
 		$query = DB::connection()->prepare('INSERT INTO Book (title, author) 
 			VALUES (:title, :author) RETURNING id');
@@ -84,6 +88,7 @@ class Book extends BaseModel{
 		$this->id = $row['id'];
 	}
 
+	// Validointifunktiot
 	public function validate_title(){
 		return parent::validate_field_not_null($this->title, 'Title cannot be empty!');
 	}
