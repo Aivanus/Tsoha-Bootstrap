@@ -40,4 +40,11 @@
       }
     }
 
+    public function validate_string_not_too_long($string, $lenght, $message){
+      $string = trim($string);
+      if(strlen($string) > $lenght){
+        return $message;
+      }
+    }
+
   }

@@ -5,7 +5,8 @@ class Reader extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
-		$this->validators = array('validate_username_is_unique', 'validate_username_not_empty', 'validate_password_not_empty');
+		$this->validators = array('validate_username_is_unique', 'validate_username_not_empty', 'validate_password_not_empty', 'validate_username_length', 
+			'validate_password_length');
 	}
 
 	// Funktio hakee tietokannasta kaikki käyttäjät ja järjestää ne
@@ -133,7 +134,15 @@ class Reader extends BaseModel{
 		return self::validate_field_not_null($this->username, 'Username cannot be empty!'); 
 	}
 
+	public function validate_username_length(){
+		return parent::validate_string_not_too_long($this->username, 50, 'Username cannot be this long!');
+	}
+
 	public function validate_password_not_empty(){
 		return self::validate_field_not_null($this->password, 'Password cannot be empty!'); 
+	}
+
+	public function validate_password_length(){
+		return parent::validate_string_not_too_long($this->password, 50, 'Password cannot be this long!');
 	}
 }

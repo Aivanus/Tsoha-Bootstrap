@@ -6,7 +6,7 @@ class Book extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
-		$this->validators = array('validate_title', 'validate_author');
+		$this->validators = array('validate_title', 'validate_author', 'validate_title_length', 'validate_author_length');
 	}
 
 	// Hakee kaikki kirjat tietokannasta ja järjestää ne aakkosjärjestykseen
@@ -93,7 +93,15 @@ class Book extends BaseModel{
 		return parent::validate_field_not_null($this->title, 'Title cannot be empty!');
 	}
 
+	public function validate_title_length(){
+		return parent::validate_string_not_too_long($this->title, 250, 'Title cannot be this long!');
+	}
+
 	public function validate_author(){
 		return parent::validate_field_not_null($this->author, 'Author cannot be empty!');
+	}
+
+	public function validate_author_length(){
+		return parent::validate_string_not_too_long($this->author, 250, 'The name of the author cannot be this long!');
 	}
 }
