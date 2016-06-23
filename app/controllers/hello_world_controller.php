@@ -6,55 +6,9 @@
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
    	  View::make('index.html');
     }
-   
+    
+    // Testaussivu
     public static function sandbox(){
-      // $bird = Book::find('to kill a mockingbird', 'Harper LEe');
-      // $books = Book::all();
-      // $bookRating = $bird->getRating();
-      // Kint::dump($books);
-      // Kint::dump($bird);
-      // Kint::dump($bookRating);
-      // $oneMyBook = MyBook::find(1);
-      // $allMyBooks = MyBook::all();
-      // Kint::dump($oneMyBook);
-      // Kint::dump($allMyBooks);
-      // $oneReader = Reader::find(1);
-      // $allReaders = Reader::all();
-      // Kint::dump($oneReader);
-      // Kint::dump($allReaders);
-      // $oneReview = Review::find(1);
-      // $allReviews = Review::all();
-      // Kint::dump($oneReview);
-      // Kint::dump($allReviews);
-
-      $invalid_book = new Book(array(
-        'id' => 999999,
-        'title' => '',
-        'author' => ''
-        ));
-      $error = $invalid_book->validate_title();
-      Kint::dump($error);
-      $errors = $invalid_book->errors();
-      Kint::dump($errors);
-      
 
     }
-    
-    public static function login(){
-      View::make('suunnitelmat/login.html');
-    }
-
-    public static function register(){
-      View::make('suunnitelmat/register.html');
-    }
-
-    public static function reading_list(){
-      View::make('suunnitelmat/reading_list.html');
-    }
-
-    public static function add_book(){
-      View::make('suunnitelmat/add_book.html');
-    }
-    
-    
   }
