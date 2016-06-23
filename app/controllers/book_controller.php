@@ -19,13 +19,14 @@ class BookController extends BaseController{
 		$user = self::get_user_logged_in();
 		$title = $params['title'];
 		$author = $params['author'];
-		$search_result = Book::find($title, $author);
+		$bookToAdd = Book::find($params['title'], $params['author']);
 		
-		if (!is_null($search_result)) {
-			
+		if (is_null($bookToAdd)) {
+			$bookToAdd = self::createBook($params);
+		}else{
 			$mybook = new MyBook(array(
 				'reader_id' => $user->id,
-				'book_id' => $search_result->id,
+				'book_id' => $bookToAdd->id,
 				'status' => 0,
 				'added' => date("Y-m-d")
 			));
@@ -37,45 +38,14 @@ class BookController extends BaseController{
 			}
 
 			$mybook->save();
-
-		}else{
-			$new_book = new Book(array(
-				'title' => $title,
-				'author' => $author
-				));
-
-			$errors = $new_book->errors();
-
-			if(count($errors) > 0){
-				Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
-			}else{
-
-				$new_book->save();
-
-				$mybook = new MyBook(array(
-					'reader_id' => $user->id,
-					'book_id' => $new_book->id,
-					'status' => 0,
-					'added' => date("Y-m-d")
-				));
-
-				$errors = $mybook->errors();
-
-				if(count($errors) > 0){
-					Redirect::to('/mybook/add_book', array('errors' => $errors, 'attributes' => $params));
-				}
-
-				$mybook->save();
-			}
+			Redirect::to('/book/' . $mybook->book_id, array('success' => $mybook->getTitle().' was added to your reading list!'));
 		}
-
-		Redirect::to('/book/' . $mybook->book_id, array('success' => $mybook->getTitle().' was added to your reading list!'));
 	}
 
 	public static function createBook($params){
 		$new_book = new Book(array(
 				'title' => $params['title'],
-				'author' => $author
+				'author' => $params['author']
 				));
 
 			$errors = $new_book->errors();
