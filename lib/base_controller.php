@@ -8,7 +8,6 @@
         $user = Reader::find($user_id);
         return $user;
       }
-
       return null;
     }
 

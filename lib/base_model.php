@@ -23,7 +23,6 @@
         // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
         // $metodin_nimi = 'testi_metodi';
         // $this->{$metodin_nimi}();
-        //array_push($errors, $this->{$validator}());
         $validator_errors = $this->{$validator}();
         if ($validator_errors != null) {
           $errors[] = $validator_errors;
@@ -31,8 +30,7 @@
         
       }
 
-      return $errors;
-      //$errors = array_merge($errors, $validator_errors);      
+      return $errors;     
     }
 
     public function validate_field_not_null($string, $message){
