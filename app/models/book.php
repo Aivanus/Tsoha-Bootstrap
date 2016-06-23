@@ -32,7 +32,7 @@ class Book extends BaseModel{
 				WHERE UPPER(title) = UPPER(:title) AND 
 				UPPER(author) = UPPER(:author) LIMIT 1'
 			);
-		$query->execute(array('title' => $title, 'author' => $author));
+		$query->execute(array('title' => trim($title), 'author' => trim($author)));
 		$row = $query->fetch();
 
 		if($row){
@@ -79,7 +79,7 @@ class Book extends BaseModel{
 	public function save(){
 		$query = DB::connection()->prepare('INSERT INTO Book (title, author) 
 			VALUES (:title, :author) RETURNING id');
-		$query->execute(array('title' => $this->title, 'author' => $this->author));
+		$query->execute(array('title' => trim($this->title), 'author' => trim($this->author)));
 		$row = $query->fetch();
 		$this->id = $row['id'];
 	}
