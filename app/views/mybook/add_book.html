@@ -2,10 +2,8 @@
 {% extends "base.html" %}
 {% block content %}
   <h1>Add a new book</h1>
-  
-  {{forms.basic_form_template("#{base_path}/mybook", "Title", "Author", "#{attributes.title}", "#{attributes.author}", "title", "author", "Add")}}
 
-  <!-- <form method="post" action="{{base_path}}/mybook">
+  <form method="post" action="{{base_path}}/mybook">
     <div class="form-group">
       <label>Title</label>
       <input type="text" name="title" class="form-control" value="{{attributes.title}}">
@@ -19,5 +17,5 @@
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Add</button>
     </div>
-  </form> -->
+  </form>
 {% endblock %}
